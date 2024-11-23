@@ -1,9 +1,6 @@
 package br.com.fiap.grupo30.fastfood.products_api.presentation.controllers;
 
-import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.CreateProductUseCase;
-import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.GetProductUseCase;
-import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.ListProductsByCategoryUseCase;
-import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.UpdateProductUseCase;
+import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.*;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.gateways.CategoryGateway;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.gateways.ProductGateway;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.repositories.JpaCategoryRepository;
@@ -27,6 +24,7 @@ public class ProductController {
     private static final String PATH_VARIABLE_ID = "/{id}";
 
     private final CreateProductUseCase createProductUseCase;
+    private final DeleteProductUseCase deleteProductUseCase;
     private final GetProductUseCase getProductUseCase;
     private final ListProductsByCategoryUseCase listProductsByCategoryUseCase;
     private final UpdateProductUseCase updateProductUseCase;
@@ -36,6 +34,7 @@ public class ProductController {
     @Autowired
     public ProductController(
             CreateProductUseCase createProductUseCase,
+            DeleteProductUseCase deleteProductUseCase,
             GetProductUseCase getProductUseCase,
             ListProductsByCategoryUseCase listProductsByCategoryUseCase,
             UpdateProductUseCase updateProductUseCase,
@@ -43,6 +42,7 @@ public class ProductController {
             JpaCategoryRepository jpaCategoryRepository) {
 
         this.createProductUseCase = createProductUseCase;
+        this.deleteProductUseCase = deleteProductUseCase;
         this.getProductUseCase = getProductUseCase;
         this.listProductsByCategoryUseCase = listProductsByCategoryUseCase;
         this.updateProductUseCase = updateProductUseCase;
@@ -117,5 +117,15 @@ public class ProductController {
                         dto.getImgUrl(),
                         dto.getCategory());
         return ResponseEntity.ok().body(dtoUpdated);
+    }
+
+    @DeleteMapping(value = PATH_VARIABLE_ID)
+    @Operation(
+            summary = "Delete a product",
+            description = "Delete an existing product based on its ID")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        ProductGateway productGateway = new ProductGateway(jpaProductRepository);
+        this.deleteProductUseCase.execute(productGateway, id);
+        return ResponseEntity.noContent().build();
     }
 }

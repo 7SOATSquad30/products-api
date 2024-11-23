@@ -4,10 +4,13 @@ import br.com.fiap.grupo30.fastfood.products_api.domain.entities.Product;
 import br.com.fiap.grupo30.fastfood.products_api.domain.repositories.ProductRepository;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.entities.ProductEntity;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.repositories.JpaProductRepository;
+import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.exceptions.DatabaseException;
 import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.exceptions.ResourceNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,5 +47,16 @@ public class ProductGateway implements ProductRepository {
     public Product save(Product product) {
         ProductEntity entity = jpaProductRepository.save(product.toPersistence());
         return entity.toDomainEntity();
+    }
+
+    @Override
+    public void delete(Long id) {
+        try {
+            jpaProductRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Id not found " + id, e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Integrity violation", e);
+        }
     }
 }
