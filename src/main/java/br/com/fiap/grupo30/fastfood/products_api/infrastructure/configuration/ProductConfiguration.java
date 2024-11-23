@@ -1,6 +1,7 @@
 package br.com.fiap.grupo30.fastfood.products_api.infrastructure.configuration;
 
 import br.com.fiap.grupo30.fastfood.products_api.domain.repositories.ProductRepository;
+import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.CreateProductUseCase;
 import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.GetProductUseCase;
 import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.ListProductsByCategoryUseCase;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.gateways.ProductGateway;
@@ -24,5 +25,10 @@ public class ProductConfiguration {
     @Bean
     public GetProductUseCase getProductUseCase() {
         return new GetProductUseCase();
+    }
+
+    @Bean
+    public CreateProductUseCase createProductUseCase() {
+        return new CreateProductUseCase();
     }
 }

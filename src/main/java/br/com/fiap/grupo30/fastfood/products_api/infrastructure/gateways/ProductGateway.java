@@ -38,4 +38,11 @@ public class ProductGateway implements ProductRepository {
                 obj.orElseThrow(() -> new ResourceNotFoundException("Product not found"));
         return entity.toDomainEntity();
     }
+
+    @Override
+    @Transactional
+    public Product save(Product product) {
+        ProductEntity entity = jpaProductRepository.save(product.toPersistence());
+        return entity.toDomainEntity();
+    }
 }
