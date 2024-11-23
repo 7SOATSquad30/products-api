@@ -4,6 +4,7 @@ import br.com.fiap.grupo30.fastfood.products_api.domain.repositories.ProductRepo
 import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.CreateProductUseCase;
 import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.GetProductUseCase;
 import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.ListProductsByCategoryUseCase;
+import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.UpdateProductUseCase;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.gateways.ProductGateway;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.repositories.JpaProductRepository;
 import org.springframework.context.annotation.Bean;
@@ -30,5 +31,10 @@ public class ProductConfiguration {
     @Bean
     public CreateProductUseCase createProductUseCase() {
         return new CreateProductUseCase();
+    }
+
+    @Bean
+    public UpdateProductUseCase updateProductUseCase() {
+        return new UpdateProductUseCase();
     }
 }

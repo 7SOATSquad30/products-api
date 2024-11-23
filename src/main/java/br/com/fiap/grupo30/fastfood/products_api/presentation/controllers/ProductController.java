@@ -3,6 +3,7 @@ package br.com.fiap.grupo30.fastfood.products_api.presentation.controllers;
 import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.CreateProductUseCase;
 import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.GetProductUseCase;
 import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.ListProductsByCategoryUseCase;
+import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.UpdateProductUseCase;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.gateways.CategoryGateway;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.gateways.ProductGateway;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.repositories.JpaCategoryRepository;
@@ -25,9 +26,10 @@ public class ProductController {
 
     private static final String PATH_VARIABLE_ID = "/{id}";
 
-    private final ListProductsByCategoryUseCase listProductsByCategoryUseCase;
-    private final GetProductUseCase getProductUseCase;
     private final CreateProductUseCase createProductUseCase;
+    private final GetProductUseCase getProductUseCase;
+    private final ListProductsByCategoryUseCase listProductsByCategoryUseCase;
+    private final UpdateProductUseCase updateProductUseCase;
     private final JpaProductRepository jpaProductRepository;
     private final JpaCategoryRepository jpaCategoryRepository;
 
@@ -36,12 +38,14 @@ public class ProductController {
             CreateProductUseCase createProductUseCase,
             GetProductUseCase getProductUseCase,
             ListProductsByCategoryUseCase listProductsByCategoryUseCase,
+            UpdateProductUseCase updateProductUseCase,
             JpaProductRepository jpaProductRepository,
             JpaCategoryRepository jpaCategoryRepository) {
 
-        this.listProductsByCategoryUseCase = listProductsByCategoryUseCase;
-        this.getProductUseCase = getProductUseCase;
         this.createProductUseCase = createProductUseCase;
+        this.getProductUseCase = getProductUseCase;
+        this.listProductsByCategoryUseCase = listProductsByCategoryUseCase;
+        this.updateProductUseCase = updateProductUseCase;
         this.jpaProductRepository = jpaProductRepository;
         this.jpaCategoryRepository = jpaCategoryRepository;
     }
@@ -92,5 +96,26 @@ public class ProductController {
                         .buildAndExpand(dto.getProductId())
                         .toUri();
         return ResponseEntity.created(uri).body(dtoCreated);
+    }
+
+    @PutMapping(value = PATH_VARIABLE_ID)
+    @Operation(
+            summary = "Update a product",
+            description = "Update the data of an existing product based on its ID")
+    public ResponseEntity<ProductDTO> updateProduct(
+            @PathVariable Long id, @RequestBody @Valid ProductDTO dto) {
+        ProductGateway productGateway = new ProductGateway(jpaProductRepository);
+        CategoryGateway categoryGateway = new CategoryGateway(jpaCategoryRepository);
+        ProductDTO dtoUpdated =
+                this.updateProductUseCase.execute(
+                        productGateway,
+                        categoryGateway,
+                        id,
+                        dto.getName(),
+                        dto.getDescription(),
+                        dto.getPrice(),
+                        dto.getImgUrl(),
+                        dto.getCategory());
+        return ResponseEntity.ok().body(dtoUpdated);
     }
 }
