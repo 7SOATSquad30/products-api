@@ -5,4 +5,8 @@ import java.util.List;
 
 public interface ProductRepository {
     List<Product> findProductsByCategoryId(Long categoryId);
+
+    Product findById(Long id);
+
+    Product save(Product product);
 }
