@@ -1,5 +1,6 @@
 package br.com.fiap.grupo30.fastfood.products_api.presentation.controllers;
 
+import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.GetProductUseCase;
 import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.ListProductsByCategoryUseCase;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.gateways.ProductGateway;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.repositories.JpaProductRepository;
@@ -16,14 +17,19 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Products Controller", description = "RESTful API for managing products.")
 public class ProductController {
 
+    private static final String PATH_VARIABLE_ID = "/{id}";
+
+    private final GetProductUseCase getProductUseCase;
     private final ListProductsByCategoryUseCase listProductsByCategoryUseCase;
     private final JpaProductRepository jpaProductRepository;
 
     @Autowired
     public ProductController(
+            GetProductUseCase getProductUseCase,
             ListProductsByCategoryUseCase listProductsByCategoryUseCase,
             JpaProductRepository jpaProductRepository) {
 
+        this.getProductUseCase = getProductUseCase;
         this.listProductsByCategoryUseCase = listProductsByCategoryUseCase;
         this.jpaProductRepository = jpaProductRepository;
     }
@@ -40,5 +46,15 @@ public class ProductController {
         List<ProductDTO> products =
                 this.listProductsByCategoryUseCase.execute(productGateway, categoryId);
         return ResponseEntity.ok().body(products);
+    }
+
+    @GetMapping(value = PATH_VARIABLE_ID)
+    @Operation(
+            summary = "Get a product by ID",
+            description = "Retrieve a specific product based on its ID")
+    public ResponseEntity<ProductDTO> findProductById(@PathVariable Long id) {
+        ProductGateway productGateway = new ProductGateway(jpaProductRepository);
+        ProductDTO dto = this.getProductUseCase.execute(productGateway, id);
+        return ResponseEntity.ok().body(dto);
     }
 }
