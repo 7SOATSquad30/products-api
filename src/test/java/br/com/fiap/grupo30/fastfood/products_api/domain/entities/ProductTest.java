@@ -1,11 +1,11 @@
 package br.com.fiap.grupo30.fastfood.products_api.domain.entities;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.entities.ProductEntity;
 import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.dto.ProductDTO;
 import br.com.fiap.grupo30.fastfood.products_api.utils.ProductHelper;
+import java.util.Objects;
 import org.junit.jupiter.api.Test;
 
 class ProductTest {
@@ -147,6 +147,10 @@ class ProductTest {
 
     @Test
     void shouldHaveHashCodeForNullId() {
-        fail("Test not implemented");
+        // Arrange
+        Product product = ProductHelper.createDefaultProduct();
+
+        // Act & Assert
+        assertThat(product.hashCode()).isEqualTo(Objects.hash((Object) null));
     }
 }
