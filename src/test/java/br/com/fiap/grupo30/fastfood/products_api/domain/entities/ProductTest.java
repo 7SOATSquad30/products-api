@@ -12,7 +12,7 @@ class ProductTest {
     @Test
     void shouldCreateProductWithNullId() {
         // Act
-        Product product = ProductHelper.createProduct();
+        Product product = ProductHelper.createDefaultProduct();
 
         // Assert
         assertThat(product.getId()).isNull();
@@ -21,7 +21,7 @@ class ProductTest {
     @Test
     void shouldCreateProductWithName() {
         // Act
-        Product product = ProductHelper.createProduct();
+        Product product = ProductHelper.createDefaultProduct();
 
         // Assert
         assertThat(product.getName()).isEqualTo("Burger");
@@ -30,7 +30,7 @@ class ProductTest {
     @Test
     void shouldCreateProductWithDescription() {
         // Act
-        Product product = ProductHelper.createProduct();
+        Product product = ProductHelper.createDefaultProduct();
 
         // Assert
         assertThat(product.getDescription()).isEqualTo("Delicious burger");
@@ -39,7 +39,7 @@ class ProductTest {
     @Test
     void shouldCreateProductWithPrice() {
         // Act
-        Product product = ProductHelper.createProduct();
+        Product product = ProductHelper.createDefaultProduct();
 
         // Assert
         assertThat(product.getPrice()).isEqualTo(12.99);
@@ -48,7 +48,7 @@ class ProductTest {
     @Test
     void shouldCreateProductWithImgUrl() {
         // Act
-        Product product = ProductHelper.createProduct();
+        Product product = ProductHelper.createDefaultProduct();
 
         // Assert
         assertThat(product.getImgUrl()).isEqualTo("http://example.com/burger.png");
@@ -57,10 +57,10 @@ class ProductTest {
     @Test
     void shouldCreateProductWithCategory() {
         // Arrange
-        Category category = ProductHelper.generateCategory();
+        Category category = ProductHelper.createDefaultCategory();
 
         // Act
-        Product product = ProductHelper.createProduct();
+        Product product = ProductHelper.createDefaultProduct();
 
         // Assert
         assertThat(product.getCategory()).isEqualTo(category);
@@ -69,8 +69,7 @@ class ProductTest {
     @Test
     void shouldConvertToDTOWithName() {
         // Arrange
-        Product product = ProductHelper.createProduct();
-        product.setId(1L);
+        Product product = ProductHelper.createProductWithId(1L);
 
         // Act
         ProductDTO productDTO = product.toDTO();
@@ -82,8 +81,7 @@ class ProductTest {
     @Test
     void shouldConvertToPersistenceWithId() {
         // Arrange
-        Product product = ProductHelper.createProduct();
-        product.setId(1L);
+        Product product = ProductHelper.createProductWithId(1L);
 
         // Act
         ProductEntity productEntity = product.toPersistence();
@@ -95,16 +93,15 @@ class ProductTest {
     @Test
     void shouldCompareEqualityWhenIdsMatch() {
         // Arrange
-        Product product1 = ProductHelper.createProduct();
-        product1.setId(1L);
+        Product product1 = ProductHelper.createProductWithId(1L);
         Product product2 =
                 new Product(
                         1L,
-                        "Pizza",
-                        "Delicious pizza",
+                        "French Fries",
+                        "Delicious french fries",
                         15.99,
-                        "http://example.com/pizza.png",
-                        new Category(2L, "Italian Food"));
+                        "http://example.com/french-fries.png",
+                        new Category(2L, "Sides"));
 
         // Act & Assert
         assertThat(product1).isEqualTo(product2);
@@ -113,8 +110,7 @@ class ProductTest {
     @Test
     void shouldNotCompareEqualityWhenIdsDiffer() {
         // Arrange
-        Product product1 = ProductHelper.createProduct();
-        product1.setId(1L);
+        Product product1 = ProductHelper.createProductWithId(1L);
         Product product2 =
                 new Product(
                         2L,
@@ -122,7 +118,7 @@ class ProductTest {
                         "Delicious burger",
                         12.99,
                         "http://example.com/burger.png",
-                        new Category(1L, "Fast Food"));
+                        new Category(1L, "Snacks"));
 
         // Act & Assert
         assertThat(product1).isNotEqualTo(product2);
