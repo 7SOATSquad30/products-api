@@ -3,6 +3,7 @@ package br.com.fiap.grupo30.fastfood.products_api.domain.entities;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.dto.CategoryDTO;
 import org.junit.jupiter.api.Test;
 
 class CategoryTest {
@@ -29,7 +30,14 @@ class CategoryTest {
 
     @Test
     void shouldConvertToDTOWithCorrectName() {
-        fail("test not implemented");
+        // Arrange
+        Category category = new Category(1L, CATEGORY_NAME);
+
+        // Act
+        CategoryDTO dto = category.toDTO();
+
+        // Assert
+        assertThat(dto.getName()).isEqualTo(category.getName());
     }
 
     @Test
