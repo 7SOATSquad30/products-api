@@ -55,7 +55,14 @@ class ProductTest {
 
     @Test
     void shouldCreateProductWithCategory() {
-        fail("Test not implemented");
+        // Arrange
+        Category category = ProductHelper.generateCategory();
+
+        // Act
+        Product product = ProductHelper.createProduct();
+
+        // Assert
+        assertThat(product.getCategory()).isEqualTo(category);
     }
 
     @Test
