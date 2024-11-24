@@ -95,7 +95,20 @@ class ProductTest {
 
     @Test
     void shouldCompareEqualityWhenIdsMatch() {
-        fail("Test not implemented");
+        // Arrange
+        Product product1 = ProductHelper.createProduct();
+        product1.setId(1L);
+        Product product2 =
+                new Product(
+                        1L,
+                        "Pizza",
+                        "Delicious pizza",
+                        15.99,
+                        "http://example.com/pizza.png",
+                        new Category(2L, "Italian Food"));
+
+        // Act & Assert
+        assertThat(product1).isEqualTo(product2);
     }
 
     @Test
