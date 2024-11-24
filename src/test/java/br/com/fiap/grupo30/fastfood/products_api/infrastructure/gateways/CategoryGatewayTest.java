@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import br.com.fiap.grupo30.fastfood.products_api.domain.entities.Category;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.entities.CategoryEntity;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.repositories.JpaCategoryRepository;
+import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.exceptions.ResourceNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -123,7 +124,13 @@ class CategoryGatewayTest {
 
     @Test
     void findOneShouldThrowExceptionIfNotFound() {
-        fail("test not implemented");
+        // Arrange
+        when(jpaCategoryRepository.findCategory(CATEGORY_NAME)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThatThrownBy(() -> categoryGateway.findOne(CATEGORY_NAME))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("Category not found");
     }
 
     @Test
