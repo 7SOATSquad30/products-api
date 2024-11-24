@@ -46,7 +46,11 @@ class ProductTest {
 
     @Test
     void shouldCreateProductWithImgUrl() {
-        fail("Test not implemented");
+        // Act
+        Product product = ProductHelper.createProduct();
+
+        // Assert
+        assertThat(product.getImgUrl()).isEqualTo("http://example.com/burger.png");
     }
 
     @Test
