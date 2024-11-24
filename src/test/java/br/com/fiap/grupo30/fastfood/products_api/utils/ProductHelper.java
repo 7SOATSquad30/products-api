@@ -5,7 +5,7 @@ import br.com.fiap.grupo30.fastfood.products_api.domain.entities.Product;
 
 public class ProductHelper {
 
-    public static Product generateProduct() {
+    public static Product createProduct() {
         return Product.create(
                 "Burger",
                 "Delicious burger",
