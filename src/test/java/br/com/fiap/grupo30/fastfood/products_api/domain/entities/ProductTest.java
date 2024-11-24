@@ -3,6 +3,7 @@ package br.com.fiap.grupo30.fastfood.products_api.domain.entities;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.dto.ProductDTO;
 import br.com.fiap.grupo30.fastfood.products_api.utils.ProductHelper;
 import org.junit.jupiter.api.Test;
 
@@ -67,7 +68,14 @@ class ProductTest {
 
     @Test
     void shouldConvertToDTOWithName() {
-        fail("Test not implemented");
+        // Arrange
+        Product product = ProductHelper.createProduct();
+
+        // Act
+        ProductDTO productDTO = product.toDTO();
+
+        // Assert
+        assertThat(productDTO.getName()).isEqualTo("Burger");
     }
 
     @Test
