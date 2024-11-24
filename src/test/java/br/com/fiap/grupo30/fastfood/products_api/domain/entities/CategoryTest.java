@@ -77,7 +77,12 @@ class CategoryTest {
 
     @Test
     void shouldHaveSameHashCodeIfNamesAreSame() {
-        fail("test not implemented");
+        // Arrange
+        Category category1 = new Category(1L, CATEGORY_NAME);
+        Category category2 = new Category(2L, CATEGORY_NAME);
+
+        // Assert
+        assertThat(category1.hashCode()).hasSameHashCodeAs(category2.hashCode());
     }
 
     @Test
