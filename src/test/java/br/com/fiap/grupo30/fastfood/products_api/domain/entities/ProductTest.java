@@ -37,7 +37,11 @@ class ProductTest {
 
     @Test
     void shouldCreateProductWithPrice() {
-        fail("Test not implemented");
+        // Act
+        Product product = ProductHelper.createProduct();
+
+        // Assert
+        assertThat(product.getPrice()).isEqualTo(12.99);
     }
 
     @Test
