@@ -55,7 +55,14 @@ class CategoryTest {
 
     @Test
     void shouldConvertToPersistenceEntityWithCorrectName() {
-        fail("test not implemented");
+        // Arrange
+        Category category = new Category(1L, CATEGORY_NAME);
+
+        // Act
+        CategoryEntity entity = category.toPersistence();
+
+        // Assert
+        assertThat(entity.getName()).isEqualTo(category.getName());
     }
 
     @Test
