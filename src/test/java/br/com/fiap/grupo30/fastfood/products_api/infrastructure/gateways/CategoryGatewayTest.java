@@ -135,6 +135,17 @@ class CategoryGatewayTest {
 
     @Test
     void findOneShouldVerifyRepositoryCallOnException() {
-        fail("test not implemented");
+        // Arrange
+        when(jpaCategoryRepository.findCategory(CATEGORY_NAME)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        try {
+            categoryGateway.findOne(CATEGORY_NAME);
+        } catch (ResourceNotFoundException ignored) {
+            // Ignored: check is done separately
+        }
+
+        // Verify
+        verify(jpaCategoryRepository, times(1)).findCategory(CATEGORY_NAME);
     }
 }
