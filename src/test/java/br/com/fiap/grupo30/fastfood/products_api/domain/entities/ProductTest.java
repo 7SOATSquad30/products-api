@@ -1,7 +1,6 @@
 package br.com.fiap.grupo30.fastfood.products_api.domain.entities;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.entities.ProductEntity;
 import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.dto.ProductDTO;
@@ -113,6 +112,19 @@ class ProductTest {
 
     @Test
     void shouldNotCompareEqualityWhenIdsDiffer() {
-        fail("Test not implemented");
+        // Arrange
+        Product product1 = ProductHelper.createProduct();
+        product1.setId(1L);
+        Product product2 =
+                new Product(
+                        2L,
+                        "Burger",
+                        "Delicious burger",
+                        12.99,
+                        "http://example.com/burger.png",
+                        new Category(1L, "Fast Food"));
+
+        // Act & Assert
+        assertThat(product1).isNotEqualTo(product2);
     }
 }
