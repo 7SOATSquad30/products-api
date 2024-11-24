@@ -67,7 +67,12 @@ class CategoryTest {
 
     @Test
     void shouldBeEqualIfNamesAreSame() {
-        fail("test not implemented");
+        // Arrange
+        Category category1 = new Category(1L, CATEGORY_NAME);
+        Category category2 = new Category(2L, CATEGORY_NAME);
+
+        // Assert
+        assertThat(category1).isEqualTo(category2);
     }
 
     @Test
