@@ -43,7 +43,15 @@ class CategoryGatewayTest {
 
     @Test
     void findAllShouldVerifyRepositoryCall() {
-        fail("test not implemented");
+        // Arrange
+        CategoryEntity entity = new CategoryEntity(CATEGORY_ID, CATEGORY_NAME);
+        when(jpaCategoryRepository.findAll()).thenReturn(List.of(entity));
+
+        // Act
+        categoryGateway.findAll();
+
+        // Verify
+        verify(jpaCategoryRepository, times(1)).findAll();
     }
 
     @Test
