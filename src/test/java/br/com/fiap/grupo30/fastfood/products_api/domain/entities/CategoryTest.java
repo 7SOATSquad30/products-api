@@ -1,7 +1,6 @@
 package br.com.fiap.grupo30.fastfood.products_api.domain.entities;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.entities.CategoryEntity;
 import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.dto.CategoryDTO;
@@ -87,6 +86,11 @@ class CategoryTest {
 
     @Test
     void shouldNotBeEqualIfNamesAreDifferent() {
-        fail("test not implemented");
+        // Arrange
+        Category category1 = new Category(1L, CATEGORY_NAME);
+        Category category2 = new Category(2L, "Snacks");
+
+        // Assert
+        assertThat(category1).isNotEqualTo(category2);
     }
 }
