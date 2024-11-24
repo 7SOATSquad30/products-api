@@ -3,6 +3,7 @@ package br.com.fiap.grupo30.fastfood.products_api.domain.entities;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.entities.ProductEntity;
 import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.dto.ProductDTO;
 import br.com.fiap.grupo30.fastfood.products_api.utils.ProductHelper;
 import org.junit.jupiter.api.Test;
@@ -70,6 +71,7 @@ class ProductTest {
     void shouldConvertToDTOWithName() {
         // Arrange
         Product product = ProductHelper.createProduct();
+        product.setId(1L);
 
         // Act
         ProductDTO productDTO = product.toDTO();
@@ -80,7 +82,15 @@ class ProductTest {
 
     @Test
     void shouldConvertToPersistenceWithId() {
-        fail("Test not implemented");
+        // Arrange
+        Product product = ProductHelper.createProduct();
+        product.setId(1L);
+
+        // Act
+        ProductEntity productEntity = product.toPersistence();
+
+        // Assert
+        assertThat(productEntity.getId()).isEqualTo(1L);
     }
 
     @Test
