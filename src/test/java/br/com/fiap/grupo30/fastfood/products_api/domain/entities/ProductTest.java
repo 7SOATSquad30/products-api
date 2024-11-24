@@ -28,7 +28,11 @@ class ProductTest {
 
     @Test
     void shouldCreateProductWithDescription() {
-        fail("Test not implemented");
+        // Act
+        Product product = ProductHelper.createProduct();
+
+        // Assert
+        assertThat(product.getDescription()).isEqualTo("Delicious burger");
     }
 
     @Test
