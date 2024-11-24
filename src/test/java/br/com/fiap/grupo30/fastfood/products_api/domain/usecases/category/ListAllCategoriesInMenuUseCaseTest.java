@@ -61,7 +61,18 @@ class ListAllCategoriesInMenuUseCaseTest {
 
     @Test
     void shouldReturnSecondCategoryWithCorrectName() {
-        fail("test not implemented");
+        // Arrange
+        List<Category> mockCategories =
+                List.of(
+                        new Category(1L, FIRST_CATEGORY_NAME),
+                        new Category(2L, SECOND_CATEGORY_NAME));
+        when(categoryGateway.findAll()).thenReturn(mockCategories);
+
+        // Act
+        List<CategoryDTO> result = useCase.execute(categoryGateway);
+
+        // Assert
+        assertThat(result.get(1).getName()).isEqualTo(SECOND_CATEGORY_NAME);
     }
 
     @Test
