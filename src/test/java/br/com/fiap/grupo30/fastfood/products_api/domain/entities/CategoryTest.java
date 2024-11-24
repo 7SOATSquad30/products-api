@@ -3,6 +3,7 @@ package br.com.fiap.grupo30.fastfood.products_api.domain.entities;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.entities.CategoryEntity;
 import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.dto.CategoryDTO;
 import org.junit.jupiter.api.Test;
 
@@ -42,7 +43,14 @@ class CategoryTest {
 
     @Test
     void shouldConvertToPersistenceEntityWithCorrectId() {
-        fail("test not implemented");
+        // Arrange
+        Category category = new Category(1L, CATEGORY_NAME);
+
+        // Act
+        CategoryEntity entity = category.toPersistence();
+
+        // Assert
+        assertThat(entity.getId()).isEqualTo(category.getId());
     }
 
     @Test
