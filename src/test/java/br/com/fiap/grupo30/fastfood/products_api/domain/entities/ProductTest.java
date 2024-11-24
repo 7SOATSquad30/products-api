@@ -19,7 +19,11 @@ class ProductTest {
 
     @Test
     void shouldCreateProductWithName() {
-        fail("Test not implemented");
+        // Act
+        Product product = ProductHelper.createProduct();
+
+        // Assert
+        assertThat(product.getName()).isEqualTo("Burger");
     }
 
     @Test
