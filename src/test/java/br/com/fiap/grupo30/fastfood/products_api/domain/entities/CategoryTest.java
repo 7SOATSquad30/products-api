@@ -20,7 +20,11 @@ class CategoryTest {
 
     @Test
     void shouldCreateCategoryWithCorrectName() {
-        fail("test not implemented");
+        // Act
+        Category category = Category.create(CATEGORY_NAME);
+
+        // Assert
+        assertThat(category.getName()).isEqualTo(CATEGORY_NAME);
     }
 
     @Test
