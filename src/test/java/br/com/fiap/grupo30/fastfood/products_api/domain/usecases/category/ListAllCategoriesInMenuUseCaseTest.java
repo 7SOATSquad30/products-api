@@ -1,7 +1,6 @@
 package br.com.fiap.grupo30.fastfood.products_api.domain.usecases.category;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 import br.com.fiap.grupo30.fastfood.products_api.domain.entities.Category;
@@ -89,6 +88,13 @@ class ListAllCategoriesInMenuUseCaseTest {
 
     @Test
     void shouldCallFindAllOnCategoryGateway() {
-        fail("test not implemented");
+        // Arrange
+        when(categoryGateway.findAll()).thenReturn(List.of());
+
+        // Act
+        useCase.execute(categoryGateway);
+
+        // Assert
+        verify(categoryGateway).findAll();
     }
 }
