@@ -137,7 +137,12 @@ class ProductTest {
 
     @Test
     void shouldHaveDifferentHashCodeForDifferentIds() {
-        fail("Test not implemented");
+        // Arrange
+        Product product1 = ProductHelper.createProductWithId(1L);
+        Product product2 = ProductHelper.createProductWithId(2L);
+
+        // Act & Assert
+        assertThat(product1.hashCode()).isNotEqualTo(product2.hashCode());
     }
 
     @Test
