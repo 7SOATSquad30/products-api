@@ -1,6 +1,7 @@
 package br.com.fiap.grupo30.fastfood.products_api.domain.entities;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.entities.ProductEntity;
 import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.dto.ProductDTO;
@@ -122,5 +123,25 @@ class ProductTest {
 
         // Act & Assert
         assertThat(product1).isNotEqualTo(product2);
+    }
+
+    @Test
+    void shouldHaveSameHashCodeForSameId() {
+        // Arrange
+        Product product1 = ProductHelper.createProductWithId(1L);
+        Product product2 = ProductHelper.createProductWithId(1L);
+
+        // Act & Assert
+        assertThat(product1.hashCode()).hasSameHashCodeAs(product2.hashCode());
+    }
+
+    @Test
+    void shouldHaveDifferentHashCodeForDifferentIds() {
+        fail("Test not implemented");
+    }
+
+    @Test
+    void shouldHaveHashCodeForNullId() {
+        fail("Test not implemented");
     }
 }
