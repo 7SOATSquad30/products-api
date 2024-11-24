@@ -77,7 +77,14 @@ class ListAllCategoriesInMenuUseCaseTest {
 
     @Test
     void shouldReturnEmptyListWhenNoCategoriesExist() {
-        fail("test not implemented");
+        // Arrange
+        when(categoryGateway.findAll()).thenReturn(List.of());
+
+        // Act
+        List<CategoryDTO> result = useCase.execute(categoryGateway);
+
+        // Assert
+        assertThat(result).isEmpty();
     }
 
     @Test
