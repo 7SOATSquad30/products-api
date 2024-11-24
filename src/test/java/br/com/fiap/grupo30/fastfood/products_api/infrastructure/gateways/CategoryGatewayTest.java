@@ -7,6 +7,7 @@ import br.com.fiap.grupo30.fastfood.products_api.domain.entities.Category;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.entities.CategoryEntity;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.repositories.JpaCategoryRepository;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -83,7 +84,15 @@ class CategoryGatewayTest {
     // Testes para findOne
     @Test
     void findOneShouldReturnCategoryWithCorrectId() {
-        fail("test not implemented");
+        // Arrange
+        CategoryEntity entity = new CategoryEntity(CATEGORY_ID, CATEGORY_NAME);
+        when(jpaCategoryRepository.findCategory(CATEGORY_NAME)).thenReturn(Optional.of(entity));
+
+        // Act
+        Category category = categoryGateway.findOne(CATEGORY_NAME);
+
+        // Assert
+        assertThat(category.getId()).isEqualTo(CATEGORY_ID);
     }
 
     @Test
