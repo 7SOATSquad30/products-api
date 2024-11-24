@@ -97,7 +97,15 @@ class CategoryGatewayTest {
 
     @Test
     void findOneShouldReturnCategoryWithCorrectName() {
-        fail("test not implemented");
+        // Arrange
+        CategoryEntity entity = new CategoryEntity(CATEGORY_ID, CATEGORY_NAME);
+        when(jpaCategoryRepository.findCategory(CATEGORY_NAME)).thenReturn(Optional.of(entity));
+
+        // Act
+        Category category = categoryGateway.findOne(CATEGORY_NAME);
+
+        // Assert
+        assertThat(category.getName()).isEqualTo(CATEGORY_NAME);
     }
 
     @Test
