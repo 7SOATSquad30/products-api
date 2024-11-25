@@ -9,15 +9,15 @@ import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.dto.Pro
 public class CreateProductUseCase {
 
     public ProductDTO execute(
-            ProductGateway productGateway,
-            CategoryGateway categoryGateway,
-            String name,
-            String description,
-            Double price,
-            String imgUrl,
-            String category) {
-        Category categoryEntity = categoryGateway.findOne(category);
-        Product product = Product.create(name, description, price, imgUrl, categoryEntity);
+            ProductGateway productGateway, CategoryGateway categoryGateway, ProductDTO dto) {
+        Category categoryEntity = categoryGateway.findOne(dto.getCategory());
+        Product product =
+                Product.create(
+                        dto.getName(),
+                        dto.getDescription(),
+                        dto.getPrice(),
+                        dto.getImgUrl(),
+                        categoryEntity);
         return productGateway.save(product).toDTO();
     }
 }
