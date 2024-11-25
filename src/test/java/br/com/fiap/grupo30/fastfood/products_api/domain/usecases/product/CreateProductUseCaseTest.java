@@ -111,4 +111,22 @@ class CreateProductUseCaseTest {
         // Verify
         verifyNoInteractions(productGateway);
     }
+
+    @Test
+    void shouldThrowExceptionWhenProductNotSaved() {
+        // Arrange
+        Category category = ProductHelper.createDefaultCategory();
+        ProductDTO productDTO = ProductHelper.createDefaultProductDTO();
+
+        when(categoryGateway.findOne("Snacks")).thenReturn(category);
+        when(productGateway.save(any(Product.class))).thenReturn(null);
+
+        // Act & Assert
+        assertThatThrownBy(
+                        () ->
+                                createProductUseCase.execute(
+                                        productGateway, categoryGateway, productDTO))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Product could not be saved");
+    }
 }
