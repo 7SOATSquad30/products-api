@@ -82,14 +82,7 @@ public class ProductController {
         ProductGateway productGateway = new ProductGateway(jpaProductRepository);
         CategoryGateway categoryGateway = new CategoryGateway(jpaCategoryRepository);
         ProductDTO dtoCreated =
-                this.createProductUseCase.execute(
-                        productGateway,
-                        categoryGateway,
-                        dto.getName(),
-                        dto.getDescription(),
-                        dto.getPrice(),
-                        dto.getImgUrl(),
-                        dto.getCategory());
+                this.createProductUseCase.execute(productGateway, categoryGateway, dto);
         URI uri =
                 ServletUriComponentsBuilder.fromCurrentRequest()
                         .path(PATH_VARIABLE_ID)
