@@ -1,6 +1,5 @@
 package br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import br.com.fiap.grupo30.fastfood.products_api.domain.entities.Product;
@@ -38,12 +37,14 @@ class DeleteProductUseCaseTest {
     }
 
     @Test
-    void shouldCallDeleteExactlyOnce() {
-        fail("Test not implemented");
-    }
+    void shouldCallProductGatewayDelete() {
+        // Arrange
+        Long productId = 1L;
 
-    @Test
-    void shouldNotCallOtherProductGatewayMethods() {
-        fail("Test not implemented");
+        // Act
+        deleteProductUseCase.execute(productGateway, productId);
+
+        // Assert
+        verify(productGateway, times(1)).delete(productId);
     }
 }
