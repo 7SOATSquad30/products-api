@@ -23,6 +23,8 @@ class CreateProductUseCaseTest {
 
     @InjectMocks private CreateProductUseCase createProductUseCase;
 
+    private static final String CATEGORY_NAME = "Snacks";
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -35,7 +37,7 @@ class CreateProductUseCaseTest {
         Product product = ProductHelper.createDefaultProduct();
         ProductDTO productDTO = ProductHelper.createDefaultProductDTO();
 
-        when(categoryGateway.findOne("Snacks")).thenReturn(category);
+        when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(category);
         when(productGateway.save(any(Product.class))).thenReturn(product);
 
         // Act
@@ -53,14 +55,14 @@ class CreateProductUseCaseTest {
         Product product = ProductHelper.createDefaultProduct();
         ProductDTO productDTO = ProductHelper.createDefaultProductDTO();
 
-        when(categoryGateway.findOne("Snacks")).thenReturn(category);
+        when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(category);
         when(productGateway.save(any(Product.class))).thenReturn(product);
 
         // Act
         createProductUseCase.execute(productGateway, categoryGateway, productDTO);
 
         // Verify
-        verify(categoryGateway).findOne("Snacks");
+        verify(categoryGateway).findOne(CATEGORY_NAME);
     }
 
     @Test
@@ -70,7 +72,7 @@ class CreateProductUseCaseTest {
         Product product = ProductHelper.createDefaultProduct();
         ProductDTO productDTO = ProductHelper.createDefaultProductDTO();
 
-        when(categoryGateway.findOne("Snacks")).thenReturn(category);
+        when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(category);
         when(productGateway.save(any(Product.class))).thenReturn(product);
 
         // Act
@@ -104,7 +106,7 @@ class CreateProductUseCaseTest {
         // Act
         try {
             createProductUseCase.execute(productGateway, categoryGateway, productDTO);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException ignored) {
             // Expected exception, ignore
         }
 
@@ -118,7 +120,7 @@ class CreateProductUseCaseTest {
         Category category = ProductHelper.createDefaultCategory();
         ProductDTO productDTO = ProductHelper.createDefaultProductDTO();
 
-        when(categoryGateway.findOne("Snacks")).thenReturn(category);
+        when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(category);
         when(productGateway.save(any(Product.class))).thenReturn(null);
 
         // Act & Assert
