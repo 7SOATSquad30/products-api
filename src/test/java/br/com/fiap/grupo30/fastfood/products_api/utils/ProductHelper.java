@@ -30,6 +30,12 @@ public class ProductHelper {
         return product.toDTO();
     }
 
+    public static ProductDTO createDefaultProductDTOWithId() {
+        Product product = createDefaultProduct();
+        product.setId(1L);
+        return product.toDTO();
+    }
+
     public static ProductDTO createDefaultProductDTOWithNonExistentCategory() {
         Product product = createDefaultProduct();
         product.setCategory(new Category(null, "Unknown"));
