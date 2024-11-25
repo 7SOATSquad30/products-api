@@ -100,15 +100,7 @@ public class ProductController {
         ProductGateway productGateway = new ProductGateway(jpaProductRepository);
         CategoryGateway categoryGateway = new CategoryGateway(jpaCategoryRepository);
         ProductDTO dtoUpdated =
-                this.updateProductUseCase.execute(
-                        productGateway,
-                        categoryGateway,
-                        id,
-                        dto.getName(),
-                        dto.getDescription(),
-                        dto.getPrice(),
-                        dto.getImgUrl(),
-                        dto.getCategory());
+                this.updateProductUseCase.execute(productGateway, categoryGateway, dto);
         return ResponseEntity.ok().body(dtoUpdated);
     }
 
