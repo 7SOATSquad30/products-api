@@ -11,6 +11,10 @@ public class CreateProductUseCase {
     public ProductDTO execute(
             ProductGateway productGateway, CategoryGateway categoryGateway, ProductDTO dto) {
         Category categoryEntity = categoryGateway.findOne(dto.getCategory());
+        if (categoryEntity == null) {
+            throw new IllegalArgumentException("Category not found");
+        }
+
         Product product =
                 Product.create(
                         dto.getName(),
@@ -18,6 +22,11 @@ public class CreateProductUseCase {
                         dto.getPrice(),
                         dto.getImgUrl(),
                         categoryEntity);
-        return productGateway.save(product).toDTO();
+        Product savedProduct = productGateway.save(product);
+        if (savedProduct == null) {
+            throw new IllegalStateException("Product could not be saved");
+        }
+
+        return savedProduct.toDTO();
     }
 }
