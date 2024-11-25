@@ -122,7 +122,17 @@ class UpdateProductUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenCategoryNotFound() {
-        fail("Test not implemented");
+        // Arrange
+        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId();
+        when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(null);
+
+        // Act & Assert
+        assertThatThrownBy(
+            () ->
+                updateProductUseCase.execute(
+                    productGateway, categoryGateway, productDTO))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("Category not found");
     }
 
     @Test
