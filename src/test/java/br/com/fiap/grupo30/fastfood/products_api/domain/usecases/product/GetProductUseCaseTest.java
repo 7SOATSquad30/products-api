@@ -1,7 +1,6 @@
 package br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 import br.com.fiap.grupo30.fastfood.products_api.domain.entities.Product;
@@ -29,7 +28,7 @@ class GetProductUseCaseTest {
     void shouldReturnCorrectProductName() {
         // Arrange
         Long validId = 1L;
-        Product product = ProductHelper.createProductDefaultWithId(1L);
+        Product product = ProductHelper.createProductDefaultWithId(validId);
         when(productGateway.findById(validId)).thenReturn(product);
 
         // Act
@@ -41,6 +40,15 @@ class GetProductUseCaseTest {
 
     @Test
     void shouldCallFindByIdOnProductGateway() {
-        fail("Test not implemented");
+        // Arrange
+        Long productId = 1L;
+        Product product = ProductHelper.createProductDefaultWithId(productId);
+        when(productGateway.findById(productId)).thenReturn(product);
+
+        // Act
+        getProductUseCase.execute(productGateway, productId);
+
+        // Assert
+        verify(productGateway).findById(productId);
     }
 }
