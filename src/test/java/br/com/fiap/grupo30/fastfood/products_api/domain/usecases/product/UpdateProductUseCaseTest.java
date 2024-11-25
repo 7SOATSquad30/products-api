@@ -155,7 +155,22 @@ class UpdateProductUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenProductNotSaved() {
-        fail("Test not implemented");
+        // Arrange
+        Category category = ProductHelper.createDefaultCategory();
+        Product product = ProductHelper.createProductWithId(1L);
+        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId();
+
+        when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(category);
+        when(productGateway.findById(1L)).thenReturn(product);
+        when(productGateway.save(any(Product.class))).thenReturn(null);
+
+        // Act & Assert
+        assertThatThrownBy(
+                        () ->
+                                updateProductUseCase.execute(
+                                        productGateway, categoryGateway, productDTO))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Product could not be saved");
     }
 
     @Test
