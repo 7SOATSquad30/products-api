@@ -128,16 +128,29 @@ class UpdateProductUseCaseTest {
 
         // Act & Assert
         assertThatThrownBy(
-            () ->
-                updateProductUseCase.execute(
-                    productGateway, categoryGateway, productDTO))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("Category not found");
+                        () ->
+                                updateProductUseCase.execute(
+                                        productGateway, categoryGateway, productDTO))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Category not found");
     }
 
     @Test
     void shouldThrowExceptionWhenProductNotFound() {
-        fail("Test not implemented");
+        // Arrange
+        Category category = ProductHelper.createDefaultCategory();
+        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId();
+
+        when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(category);
+        when(productGateway.findById(1L)).thenReturn(null);
+
+        // Act & Assert
+        assertThatThrownBy(
+                        () ->
+                                updateProductUseCase.execute(
+                                        productGateway, categoryGateway, productDTO))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Product not found");
     }
 
     @Test
