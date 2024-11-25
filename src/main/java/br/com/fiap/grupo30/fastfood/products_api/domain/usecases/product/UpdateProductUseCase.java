@@ -9,23 +9,28 @@ import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.dto.Pro
 public class UpdateProductUseCase {
 
     public ProductDTO execute(
-            ProductGateway productGateway,
-            CategoryGateway categoryGateway,
-            Long productId,
-            String name,
-            String description,
-            Double price,
-            String imgUrl,
-            String category) {
-        Category categoryEntity = categoryGateway.findOne(category);
+            ProductGateway productGateway, CategoryGateway categoryGateway, ProductDTO dto) {
+        Category categoryEntity = categoryGateway.findOne(dto.getCategory());
+        if (categoryEntity == null) {
+            throw new IllegalArgumentException("Category not found");
+        }
 
-        Product product = productGateway.findById(productId);
-        product.setName(name);
-        product.setDescription(description);
-        product.setPrice(price);
-        product.setImgUrl(imgUrl);
+        Product product = productGateway.findById(dto.getProductId());
+        if (product == null) {
+            throw new IllegalArgumentException("Product not found");
+        }
+
+        product.setName(dto.getName());
+        product.setDescription(dto.getDescription());
+        product.setPrice(dto.getPrice());
+        product.setImgUrl(dto.getImgUrl());
         product.setCategory(categoryEntity);
 
-        return productGateway.save(product).toDTO();
+        Product savedProduct = productGateway.save(product);
+        if (savedProduct == null) {
+            throw new IllegalStateException("Product could not be saved");
+        }
+
+        return savedProduct.toDTO();
     }
 }

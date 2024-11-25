@@ -19,7 +19,7 @@ public class ProductHelper {
                 createDefaultCategory());
     }
 
-    public static Product createProductWithId(Long id) {
+    public static Product createProductDefaultWithId(Long id) {
         Product product = createDefaultProduct();
         product.setId(id);
         return product;
@@ -27,6 +27,12 @@ public class ProductHelper {
 
     public static ProductDTO createDefaultProductDTO() {
         Product product = createDefaultProduct();
+        return product.toDTO();
+    }
+
+    public static ProductDTO createDefaultProductDTOWithId() {
+        Product product = createDefaultProduct();
+        product.setId(1L);
         return product.toDTO();
     }
 
