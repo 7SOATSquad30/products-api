@@ -175,6 +175,19 @@ class UpdateProductUseCaseTest {
 
     @Test
     void shouldCallProductGatewaySave() {
-        fail("Test not implemented");
+        // Arrange
+        Category category = ProductHelper.createDefaultCategory();
+        Product product = ProductHelper.createProductWithId(1L);
+        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId();
+
+        when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(category);
+        when(productGateway.findById(1L)).thenReturn(product);
+        when(productGateway.save(any(Product.class))).thenReturn(product);
+
+        // Act
+        updateProductUseCase.execute(productGateway, categoryGateway, productDTO);
+
+        // Verify
+        verify(productGateway).save(product);
     }
 }
