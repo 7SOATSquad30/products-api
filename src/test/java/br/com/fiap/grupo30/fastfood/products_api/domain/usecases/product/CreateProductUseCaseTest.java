@@ -97,6 +97,18 @@ class CreateProductUseCaseTest {
 
     @Test
     void shouldNotCallProductGatewayWhenCategoryNotFound() {
-        fail("Test not implemented");
+        // Arrange
+        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithNonExistentCategory();
+        when(categoryGateway.findOne("Unknown")).thenReturn(null);
+
+        // Act
+        try {
+            createProductUseCase.execute(productGateway, categoryGateway, productDTO);
+        } catch (IllegalArgumentException e) {
+            // Expected exception, ignore
+        }
+
+        // Verify
+        verifyNoInteractions(productGateway);
     }
 }
