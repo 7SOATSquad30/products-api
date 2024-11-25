@@ -70,7 +70,7 @@ class ProductTest {
     @Test
     void shouldConvertToDTOWithName() {
         // Arrange
-        Product product = ProductHelper.createProductWithId(1L);
+        Product product = ProductHelper.createProductDefaultWithId(1L);
 
         // Act
         ProductDTO productDTO = product.toDTO();
@@ -82,7 +82,7 @@ class ProductTest {
     @Test
     void shouldConvertToPersistenceWithId() {
         // Arrange
-        Product product = ProductHelper.createProductWithId(1L);
+        Product product = ProductHelper.createProductDefaultWithId(1L);
 
         // Act
         ProductEntity productEntity = product.toPersistence();
@@ -94,7 +94,7 @@ class ProductTest {
     @Test
     void shouldCompareEqualityWhenIdsMatch() {
         // Arrange
-        Product product1 = ProductHelper.createProductWithId(1L);
+        Product product1 = ProductHelper.createProductDefaultWithId(1L);
         Product product2 =
                 new Product(
                         1L,
@@ -111,7 +111,7 @@ class ProductTest {
     @Test
     void shouldNotCompareEqualityWhenIdsDiffer() {
         // Arrange
-        Product product1 = ProductHelper.createProductWithId(1L);
+        Product product1 = ProductHelper.createProductDefaultWithId(1L);
         Product product2 =
                 new Product(
                         2L,
@@ -128,8 +128,8 @@ class ProductTest {
     @Test
     void shouldHaveSameHashCodeForSameId() {
         // Arrange
-        Product product1 = ProductHelper.createProductWithId(1L);
-        Product product2 = ProductHelper.createProductWithId(1L);
+        Product product1 = ProductHelper.createProductDefaultWithId(1L);
+        Product product2 = ProductHelper.createProductDefaultWithId(1L);
 
         // Act & Assert
         assertThat(product1.hashCode()).hasSameHashCodeAs(product2.hashCode());
@@ -138,8 +138,8 @@ class ProductTest {
     @Test
     void shouldHaveDifferentHashCodeForDifferentIds() {
         // Arrange
-        Product product1 = ProductHelper.createProductWithId(1L);
-        Product product2 = ProductHelper.createProductWithId(2L);
+        Product product1 = ProductHelper.createProductDefaultWithId(1L);
+        Product product2 = ProductHelper.createProductDefaultWithId(2L);
 
         // Act & Assert
         assertThat(product1.hashCode()).isNotEqualTo(product2.hashCode());
