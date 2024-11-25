@@ -52,6 +52,7 @@ class CreateProductUseCaseTest {
         Category category = ProductHelper.createDefaultCategory();
         Product product = ProductHelper.createDefaultProduct();
         ProductDTO productDTO = ProductHelper.createDefaultProductDTO();
+
         when(categoryGateway.findOne("Snacks")).thenReturn(category);
         when(productGateway.save(any(Product.class))).thenReturn(product);
 
@@ -64,7 +65,19 @@ class CreateProductUseCaseTest {
 
     @Test
     void shouldCallProductGatewaySave() {
-        fail("Test not implemented");
+        // Arrange
+        Category category = ProductHelper.createDefaultCategory();
+        Product product = ProductHelper.createDefaultProduct();
+        ProductDTO productDTO = ProductHelper.createDefaultProductDTO();
+
+        when(categoryGateway.findOne("Snacks")).thenReturn(category);
+        when(productGateway.save(any(Product.class))).thenReturn(product);
+
+        // Act
+        createProductUseCase.execute(productGateway, categoryGateway, productDTO);
+
+        // Verify
+        verify(productGateway).save(product);
     }
 
     @Test
