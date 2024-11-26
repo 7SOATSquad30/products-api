@@ -28,7 +28,7 @@ class GetProductUseCaseTest {
     void shouldReturnCorrectProductName() {
         // Arrange
         Long validId = 1L;
-        Product product = ProductHelper.createProductDefaultWithId(validId);
+        Product product = ProductHelper.createDefaultProductWithId(validId);
         when(productGateway.findById(validId)).thenReturn(product);
 
         // Act
@@ -42,7 +42,7 @@ class GetProductUseCaseTest {
     void shouldCallFindByIdOnProductGateway() {
         // Arrange
         Long productId = 1L;
-        Product product = ProductHelper.createProductDefaultWithId(productId);
+        Product product = ProductHelper.createDefaultProductWithId(productId);
         when(productGateway.findById(productId)).thenReturn(product);
 
         // Act

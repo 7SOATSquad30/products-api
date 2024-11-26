@@ -49,7 +49,7 @@ class CreateProductUseCaseTest {
     }
 
     @Test
-    void shouldCallCategoryGatewayFindOne() {
+    void shouldCallFindOneOnCategoryGateway() {
         // Arrange
         Category category = ProductHelper.createDefaultCategory();
         Product product = ProductHelper.createDefaultProduct();
@@ -66,7 +66,7 @@ class CreateProductUseCaseTest {
     }
 
     @Test
-    void shouldCallProductGatewaySave() {
+    void shouldCallSaveOnProductGateway() {
         // Arrange
         Category category = ProductHelper.createDefaultCategory();
         Product product = ProductHelper.createDefaultProduct();
