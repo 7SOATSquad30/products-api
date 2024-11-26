@@ -92,7 +92,7 @@ class ListProductsByCategoryUseCaseTest {
     }
 
     @Test
-    void shouldCallFindProductsByCategoryId() {
+    void shouldCallFindProductsByCategoryIdOnProductGateway() {
         // Arrange
         Long categoryId = 1L;
 

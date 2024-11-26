@@ -180,7 +180,7 @@ class UpdateProductUseCaseTest {
     }
 
     @Test
-    void shouldCallProductGatewaySave() {
+    void shouldCallSaveOnProductGateway() {
         // Arrange
         Long productId = 1L;
         Category category = ProductHelper.createDefaultCategory();

@@ -37,7 +37,7 @@ class DeleteProductUseCaseTest {
     }
 
     @Test
-    void shouldCallProductGatewayDelete() {
+    void shouldCallDeleteOnProductGateway() {
         // Arrange
         Long productId = 1L;
 
