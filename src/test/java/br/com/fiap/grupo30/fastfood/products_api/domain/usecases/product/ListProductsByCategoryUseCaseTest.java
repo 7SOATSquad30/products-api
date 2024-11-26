@@ -30,8 +30,8 @@ class ListProductsByCategoryUseCaseTest {
     void shouldReturnListOfProductAsDTOs() {
         // Arrange
         Long categoryId = 1L;
-        Product product1 = ProductHelper.createProductWithIdAndCategory(1L, categoryId);
-        Product product2 = ProductHelper.createProductWithIdAndCategory(2L, categoryId);
+        Product product1 = ProductHelper.createDefaultProductWithIdAndCategory(1L, categoryId);
+        Product product2 = ProductHelper.createDefaultProductWithIdAndCategory(2L, categoryId);
         List<Product> products = List.of(product1, product2);
 
         when(productGateway.findProductsByCategoryId(categoryId)).thenReturn(products);
@@ -47,8 +47,8 @@ class ListProductsByCategoryUseCaseTest {
     void shouldReturnFirstProductWithCorrectName() {
         // Arrange
         Long categoryId = 1L;
-        Product product1 = ProductHelper.createProductWithIdAndCategory(1L, categoryId);
-        Product product2 = ProductHelper.createProductWithIdAndCategory(2L, categoryId);
+        Product product1 = ProductHelper.createDefaultProductWithIdAndCategory(1L, categoryId);
+        Product product2 = ProductHelper.createDefaultProductWithIdAndCategory(2L, categoryId);
         List<Product> products = List.of(product1, product2);
 
         when(productGateway.findProductsByCategoryId(categoryId)).thenReturn(products);
@@ -64,8 +64,8 @@ class ListProductsByCategoryUseCaseTest {
     void shouldReturnSecondProductWithCorrectName() {
         // Arrange
         Long categoryId = 1L;
-        Product product1 = ProductHelper.createProductWithIdAndCategory(1L, categoryId);
-        Product product2 = ProductHelper.createProductWithIdAndCategory(2L, categoryId);
+        Product product1 = ProductHelper.createDefaultProductWithIdAndCategory(1L, categoryId);
+        Product product2 = ProductHelper.createDefaultProductWithIdAndCategory(2L, categoryId);
         List<Product> products = List.of(product1, product2);
 
         when(productGateway.findProductsByCategoryId(categoryId)).thenReturn(products);

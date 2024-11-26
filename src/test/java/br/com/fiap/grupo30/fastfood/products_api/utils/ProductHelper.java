@@ -32,12 +32,12 @@ public class ProductHelper {
      */
     public static Product createDefaultProduct() {
         return createProduct(
-            null,
-            DEFAULT_NAME,
-            DEFAULT_DESCRIPTION,
-            DEFAULT_PRICE,
-            DEFAULT_IMAGE_URL,
-            createDefaultCategory());
+                null,
+                DEFAULT_NAME,
+                DEFAULT_DESCRIPTION,
+                DEFAULT_PRICE,
+                DEFAULT_IMAGE_URL,
+                createDefaultCategory());
     }
 
     /**

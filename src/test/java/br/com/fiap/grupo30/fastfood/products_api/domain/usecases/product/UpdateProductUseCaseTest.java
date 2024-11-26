@@ -33,9 +33,10 @@ class UpdateProductUseCaseTest {
     @Test
     void shouldUpdateProductName() {
         // Arrange
+        Long productId = 1L;
         Category category = ProductHelper.createDefaultCategory();
-        Product product = ProductHelper.createProductDefaultWithId(1L);
-        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId();
+        Product product = ProductHelper.createDefaultProductWithId(productId);
+        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId(productId);
 
         when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(category);
         when(productGateway.findById(1L)).thenReturn(product);
@@ -51,9 +52,10 @@ class UpdateProductUseCaseTest {
     @Test
     void shouldUpdateProductDescription() {
         // Arrange
+        Long productId = 1L;
         Category category = ProductHelper.createDefaultCategory();
-        Product product = ProductHelper.createProductDefaultWithId(1L);
-        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId();
+        Product product = ProductHelper.createDefaultProductWithId(productId);
+        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId(productId);
 
         when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(category);
         when(productGateway.findById(1L)).thenReturn(product);
@@ -69,9 +71,10 @@ class UpdateProductUseCaseTest {
     @Test
     void shouldUpdateProductPrice() {
         // Arrange
+        Long productId = 1L;
         Category category = ProductHelper.createDefaultCategory();
-        Product product = ProductHelper.createProductDefaultWithId(1L);
-        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId();
+        Product product = ProductHelper.createDefaultProductWithId(productId);
+        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId(productId);
 
         when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(category);
         when(productGateway.findById(1L)).thenReturn(product);
@@ -87,9 +90,10 @@ class UpdateProductUseCaseTest {
     @Test
     void shouldUpdateProductImgUrl() {
         // Arrange
+        Long productId = 1L;
         Category category = ProductHelper.createDefaultCategory();
-        Product product = ProductHelper.createProductDefaultWithId(1L);
-        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId();
+        Product product = ProductHelper.createDefaultProductWithId(productId);
+        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId(productId);
 
         when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(category);
         when(productGateway.findById(1L)).thenReturn(product);
@@ -105,9 +109,10 @@ class UpdateProductUseCaseTest {
     @Test
     void shouldUpdateProductCategory() {
         // Arrange
+        Long productId = 1L;
         Category category = ProductHelper.createDefaultCategory();
-        Product product = ProductHelper.createProductDefaultWithId(1L);
-        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId();
+        Product product = ProductHelper.createDefaultProductWithId(productId);
+        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId(productId);
 
         when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(category);
         when(productGateway.findById(1L)).thenReturn(product);
@@ -123,7 +128,7 @@ class UpdateProductUseCaseTest {
     @Test
     void shouldThrowExceptionWhenCategoryNotFound() {
         // Arrange
-        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId();
+        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId(1L);
         when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(null);
 
         // Act & Assert
@@ -139,7 +144,7 @@ class UpdateProductUseCaseTest {
     void shouldThrowExceptionWhenProductNotFound() {
         // Arrange
         Category category = ProductHelper.createDefaultCategory();
-        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId();
+        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId(1L);
 
         when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(category);
         when(productGateway.findById(1L)).thenReturn(null);
@@ -156,9 +161,10 @@ class UpdateProductUseCaseTest {
     @Test
     void shouldThrowExceptionWhenProductNotSaved() {
         // Arrange
+        Long productId = 1L;
         Category category = ProductHelper.createDefaultCategory();
-        Product product = ProductHelper.createProductDefaultWithId(1L);
-        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId();
+        Product product = ProductHelper.createDefaultProductWithId(productId);
+        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId(productId);
 
         when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(category);
         when(productGateway.findById(1L)).thenReturn(product);
@@ -176,9 +182,10 @@ class UpdateProductUseCaseTest {
     @Test
     void shouldCallProductGatewaySave() {
         // Arrange
+        Long productId = 1L;
         Category category = ProductHelper.createDefaultCategory();
-        Product product = ProductHelper.createProductDefaultWithId(1L);
-        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId();
+        Product product = ProductHelper.createDefaultProductWithId(productId);
+        ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId(productId);
 
         when(categoryGateway.findOne(CATEGORY_NAME)).thenReturn(category);
         when(productGateway.findById(1L)).thenReturn(product);

@@ -26,7 +26,7 @@ class DeleteProductUseCaseTest {
     void shouldDeleteProductWhenIdIsValid() {
         // Arrange
         Long validId = 1L;
-        Product product = ProductHelper.createProductDefaultWithId(1L);
+        Product product = ProductHelper.createDefaultProductWithId(1L);
         when(productGateway.findById(validId)).thenReturn(product);
 
         // Act
