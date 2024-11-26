@@ -8,6 +8,7 @@ import br.com.fiap.grupo30.fastfood.products_api.domain.entities.Product;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.gateways.ProductGateway;
 import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.dto.ProductDTO;
 import br.com.fiap.grupo30.fastfood.products_api.utils.ProductHelper;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -79,7 +80,16 @@ class ListProductsByCategoryUseCaseTest {
 
     @Test
     void shouldReturnEmptyListWhenNoProductsExist() {
-        fail("Test not implemented");
+        // Arrange
+        Long categoryId = 1L;
+        when(productGateway.findProductsByCategoryId(categoryId))
+                .thenReturn(Collections.emptyList());
+
+        // Act
+        List<ProductDTO> result = listProductsByCategoryUseCase.execute(productGateway, categoryId);
+
+        // Assert
+        assertThat(result).isEmpty();
     }
 
     @Test
