@@ -25,6 +25,13 @@ public class ProductHelper {
         return product;
     }
 
+    public static Product createProductWithIdAndCategory(Long id, Long categoryId) {
+        Product product = createDefaultProduct();
+        product.setId(id);
+        product.setCategory(new Category(categoryId, "Snacks"));
+        return product;
+    }
+
     public static ProductDTO createDefaultProductDTO() {
         Product product = createDefaultProduct();
         return product.toDTO();
