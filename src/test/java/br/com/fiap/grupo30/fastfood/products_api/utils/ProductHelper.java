@@ -6,46 +6,106 @@ import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.dto.Pro
 
 public class ProductHelper {
 
+    private static final String DEFAULT_NAME = "Burger";
+    private static final String DEFAULT_DESCRIPTION = "Delicious burger";
+    private static final double DEFAULT_PRICE = 12.99;
+    private static final String DEFAULT_IMAGE_URL = "http://example.com/burger.png";
+    private static final Long DEFAULT_CATEGORY_ID = 1L;
+    private static final String DEFAULT_CATEGORY_NAME = "Snacks";
+
+    /**
+     * Creates a default Category instance.
+     */
     public static Category createDefaultCategory() {
-        return new Category(1L, "Snacks");
+        return new Category(DEFAULT_CATEGORY_ID, DEFAULT_CATEGORY_NAME);
     }
 
+    /**
+     * Creates a Category with specified ID and name.
+     */
+    public static Category createCategory(Long id, String name) {
+        return new Category(id, name);
+    }
+
+    /**
+     * Creates a default Product instance.
+     */
     public static Product createDefaultProduct() {
-        return Product.create(
-                "Burger",
-                "Delicious burger",
-                12.99,
-                "http://example.com/burger.png",
+        return createProduct(
+            null,
+            DEFAULT_NAME,
+            DEFAULT_DESCRIPTION,
+            DEFAULT_PRICE,
+            DEFAULT_IMAGE_URL,
+            createDefaultCategory());
+    }
+
+    /**
+     * Creates a Product with specified parameters.
+     */
+    public static Product createProduct(
+            Long id,
+            String name,
+            String description,
+            double price,
+            String imgUrl,
+            Category category) {
+        Product product = Product.create(name, description, price, imgUrl, category);
+        product.setId(id);
+        return product;
+    }
+
+    /**
+     * Creates a Product with a specific ID.
+     */
+    public static Product createDefaultProductWithId(Long id) {
+        return createProduct(
+                id,
+                DEFAULT_NAME,
+                DEFAULT_DESCRIPTION,
+                DEFAULT_PRICE,
+                DEFAULT_IMAGE_URL,
                 createDefaultCategory());
     }
 
-    public static Product createProductDefaultWithId(Long id) {
-        Product product = createDefaultProduct();
-        product.setId(id);
-        return product;
+    /**
+     * Creates a Product with a specific ID and Category ID.
+     */
+    public static Product createDefaultProductWithIdAndCategory(Long id, Long categoryId) {
+        return createProduct(
+                id,
+                DEFAULT_NAME,
+                DEFAULT_DESCRIPTION,
+                DEFAULT_PRICE,
+                DEFAULT_IMAGE_URL,
+                createCategory(categoryId, DEFAULT_CATEGORY_NAME));
     }
 
-    public static Product createProductWithIdAndCategory(Long id, Long categoryId) {
-        Product product = createDefaultProduct();
-        product.setId(id);
-        product.setCategory(new Category(categoryId, "Snacks"));
-        return product;
-    }
-
+    /**
+     * Converts a default Product to a DTO.
+     */
     public static ProductDTO createDefaultProductDTO() {
-        Product product = createDefaultProduct();
-        return product.toDTO();
+        return createDefaultProduct().toDTO();
     }
 
-    public static ProductDTO createDefaultProductDTOWithId() {
-        Product product = createDefaultProduct();
-        product.setId(1L);
-        return product.toDTO();
+    /**
+     * Creates a default ProductDTO with a specified ID.
+     */
+    public static ProductDTO createDefaultProductDTOWithId(Long id) {
+        return createDefaultProductWithId(id).toDTO();
     }
 
+    /**
+     * Creates a ProductDTO with a non-existent category.
+     */
     public static ProductDTO createDefaultProductDTOWithNonExistentCategory() {
-        Product product = createDefaultProduct();
-        product.setCategory(new Category(null, "Unknown"));
-        return product.toDTO();
+        return createProduct(
+                        null,
+                        DEFAULT_NAME,
+                        DEFAULT_DESCRIPTION,
+                        DEFAULT_PRICE,
+                        DEFAULT_IMAGE_URL,
+                        createCategory(null, "Unknown"))
+                .toDTO();
     }
 }
