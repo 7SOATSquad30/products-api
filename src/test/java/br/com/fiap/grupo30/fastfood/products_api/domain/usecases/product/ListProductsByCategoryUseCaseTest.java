@@ -62,7 +62,19 @@ class ListProductsByCategoryUseCaseTest {
 
     @Test
     void shouldReturnSecondProductWithCorrectName() {
-        fail("Test not implemented");
+        // Arrange
+        Long categoryId = 1L;
+        Product product1 = ProductHelper.createProductWithIdAndCategory(1L, categoryId);
+        Product product2 = ProductHelper.createProductWithIdAndCategory(2L, categoryId);
+        List<Product> products = List.of(product1, product2);
+
+        when(productGateway.findProductsByCategoryId(categoryId)).thenReturn(products);
+
+        // Act
+        List<ProductDTO> result = listProductsByCategoryUseCase.execute(productGateway, categoryId);
+
+        // Assert
+        assertThat(result.get(1).getName()).isEqualTo(product2.getName());
     }
 
     @Test
