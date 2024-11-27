@@ -32,6 +32,13 @@ class CategoryEntityTest {
 
     @Test
     void preRemoveShouldSetDeletedAt() {
-        fail("Test not implemented");
+        // Arrange
+        CategoryEntity category = new CategoryEntity();
+
+        // Act
+        category.preRemove();
+
+        // Assert
+        assertNotNull(category.getDeletedAt(), "DeletedAt should be set during preRemove");
     }
 }
