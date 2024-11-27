@@ -9,7 +9,6 @@ class ProductEntityTest {
 
     private static final Long CATEGORY_ID = 1L;
     private static final String CATEGORY_NAME = "Snacks";
-
     private static final Long PRODUCT_ID = 1L;
     private static final String PRODUCT_NAME = "Burger";
     private static final String PRODUCT_DESCRIPTION = "Delicious cheeseburger";
@@ -88,5 +87,25 @@ class ProductEntityTest {
 
         // Assert
         assertThat(entity.getName()).isEqualTo(PRODUCT_NAME);
+    }
+
+    @Test
+    void toDomainEntityShouldReturnProduct() {
+        // Arrange
+        CategoryEntity category = new CategoryEntity(CATEGORY_ID, CATEGORY_NAME);
+        ProductEntity product =
+                new ProductEntity(
+                        PRODUCT_ID,
+                        PRODUCT_NAME,
+                        PRODUCT_DESCRIPTION,
+                        PRODUCT_PRICE,
+                        PRODUCT_IMG_URL,
+                        category);
+
+        // Act
+        var domainProduct = product.toDomainEntity();
+
+        // Assert
+        assertThat(domainProduct.getName()).isEqualTo(product.getName());
     }
 }
