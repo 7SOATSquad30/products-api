@@ -20,7 +20,14 @@ class CategoryEntityTest {
 
     @Test
     void preUpdateShouldSetUpdatedAt() {
-        fail("Test not implemented");
+        // Arrange
+        CategoryEntity category = new CategoryEntity();
+
+        // Act
+        category.preUpdate();
+
+        // Assert
+        assertNotNull(category.getUpdatedAt(), "UpdatedAt should be set during preUpdate");
     }
 
     @Test
