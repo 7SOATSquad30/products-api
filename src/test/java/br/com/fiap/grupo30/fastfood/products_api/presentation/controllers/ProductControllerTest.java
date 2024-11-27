@@ -75,7 +75,26 @@ public class ProductControllerTest {
 
         @Test
         void shouldReturnProductById() throws Exception {
-            fail("Test not implemented");
+            // Arrange
+            Long productId = 1L;
+            ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId(productId);
+            when(getProductUseCase.execute(any(ProductGateway.class), eq(productId)))
+                    .thenReturn(productDTO);
+
+            // Act & Assert
+            mockMvc.perform(
+                            get("/products/{id}", productId)
+                                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.productId").value(productId))
+                    .andExpect(jsonPath("$.name").value(productDTO.getName()))
+                    .andExpect(jsonPath("$.description").value(productDTO.getDescription()))
+                    .andExpect(jsonPath("$.price").value(productDTO.getPrice()))
+                    .andExpect(jsonPath("$.imgUrl").value(productDTO.getImgUrl()))
+                    .andExpect(jsonPath("$.category").value(productDTO.getCategory()));
+
+            // Verify
+            verify(getProductUseCase, times(1)).execute(any(ProductGateway.class), eq(1L));
         }
     }
 
