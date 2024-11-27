@@ -197,7 +197,12 @@ public class ProductControllerTest {
     class DeleteProduct {
         @Test
         void shouldDeleteProductAndReturn204() throws Exception {
-            fail("Test not implemented");
+            // Act & Assert
+            Long productId = 1L;
+            mockMvc.perform(delete("/products/{1}", productId)).andExpect(status().isNoContent());
+
+            // Verify
+            verify(deleteProductUseCase, times(1)).execute(any(ProductGateway.class), eq(1L));
         }
 
         @Test
