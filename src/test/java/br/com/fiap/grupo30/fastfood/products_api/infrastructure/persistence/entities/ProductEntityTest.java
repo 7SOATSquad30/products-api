@@ -29,4 +29,16 @@ class ProductEntityTest {
         // Assert
         assertNotNull(product.getUpdatedAt(), "UpdatedAt should be set during preUpdate");
     }
+
+    @Test
+    void preRemoveShouldSetDeletedAt() {
+        // Arrange
+        ProductEntity product = new ProductEntity();
+
+        // Act
+        product.preRemove();
+
+        // Assert
+        assertNotNull(product.getDeletedAt(), "DeletedAt should be set during preRemove");
+    }
 }
