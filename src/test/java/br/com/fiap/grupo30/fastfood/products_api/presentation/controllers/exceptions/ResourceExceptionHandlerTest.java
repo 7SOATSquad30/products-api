@@ -183,7 +183,26 @@ class ResourceExceptionHandlerTest {
 
         @Test
         void shouldReturnValidationErrorDetails_errorFieldName() {
-            fail("Test not implemented");
+            // Arrange
+            MethodArgumentNotValidException exception = mock(MethodArgumentNotValidException.class);
+            MockHttpServletRequest request = new MockHttpServletRequest();
+            request.setRequestURI(PATH_VARIABLE);
+
+            FieldError fieldError = FieldErrorHelper.createDefaultFieldError();
+            BindingResult bindingResult = mock(BindingResult.class);
+            when(bindingResult.getFieldErrors()).thenReturn(List.of(fieldError));
+            when(exception.getBindingResult()).thenReturn(bindingResult);
+
+            ResourceExceptionHandler handler = new ResourceExceptionHandler();
+
+            // Act
+            ResponseEntity<ValidationError> response = handler.validation(exception, request);
+
+            // Assert
+            assertEquals(
+                    "name",
+                    Objects.requireNonNull(response.getBody()).getErrors().get(0).getFieldName(),
+                    "Field name in ValidationError should match expected value");
         }
 
         @Test
