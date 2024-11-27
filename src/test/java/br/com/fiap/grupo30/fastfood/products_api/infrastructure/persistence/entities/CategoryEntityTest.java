@@ -63,4 +63,16 @@ class CategoryEntityTest {
         // Assert
         assertThat(category.getName()).isEqualTo(CATEGORY_NAME);
     }
+
+    @Test
+    void toDomainEntityShouldReturnCategory() {
+        // Arrange
+        CategoryEntity category = new CategoryEntity(CATEGORY_ID, CATEGORY_NAME);
+
+        // Act
+        var domainCategory = category.toDomainEntity();
+
+        // Assert
+        assertThat(domainCategory.getName()).isEqualTo(category.getName());
+    }
 }
