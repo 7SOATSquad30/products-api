@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import br.com.fiap.grupo30.fastfood.products_api.domain.entities.Product;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.entities.ProductEntity;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.repositories.JpaProductRepository;
+import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.exceptions.DatabaseException;
 import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.exceptions.ResourceNotFoundException;
 import br.com.fiap.grupo30.fastfood.products_api.utils.ProductHelper;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 class ProductGatewayTest {
@@ -140,7 +142,15 @@ class ProductGatewayTest {
 
         @Test
         void shouldThrowDatabaseExceptionOnIntegrityViolationWhenDeleting() {
-            fail("Test not implemented");
+            // Arrange
+            doThrow(new DataIntegrityViolationException("Integrity violation"))
+                    .when(jpaProductRepository)
+                    .deleteById(1L);
+
+            // Act & Assert
+            assertThatThrownBy(() -> productGateway.delete(1L))
+                    .isInstanceOf(DatabaseException.class)
+                    .hasMessageContaining("Integrity violation");
         }
     }
 }
