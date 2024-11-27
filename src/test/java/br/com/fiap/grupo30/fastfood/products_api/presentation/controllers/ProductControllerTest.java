@@ -13,6 +13,7 @@ import br.com.fiap.grupo30.fastfood.products_api.infrastructure.gateways.Categor
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.gateways.ProductGateway;
 import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.dto.ProductDTO;
 import br.com.fiap.grupo30.fastfood.products_api.utils.ProductHelper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -102,7 +103,29 @@ public class ProductControllerTest {
     class PostProduct {
         @Test
         void shouldCreateProductAndReturn201() throws Exception {
-            fail("Test not implemented");
+            // Arrange
+            ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId(1L);
+            when(createProductUseCase.execute(
+                            any(ProductGateway.class),
+                            any(CategoryGateway.class),
+                            any(ProductDTO.class)))
+                    .thenReturn(productDTO);
+
+            // Act & Assert
+            String jsonContent = new ObjectMapper().writeValueAsString(productDTO);
+            mockMvc.perform(
+                            post("/products")
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .content(jsonContent))
+                    .andExpect(status().isCreated())
+                    .andExpect(jsonPath("$.name").value("Burger"));
+
+            // Verify
+            verify(createProductUseCase, times(1))
+                    .execute(
+                            any(ProductGateway.class),
+                            any(CategoryGateway.class),
+                            any(ProductDTO.class));
         }
 
         @Test
