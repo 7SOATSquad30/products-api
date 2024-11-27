@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.exceptions.ResourceNotFoundException;
+import java.util.Objects;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,22 @@ class ResourceExceptionHandlerTest {
 
         @Test
         void shouldReturnCorrectErrorMessageForResourceNotFoundException() {
-            fail("Test not implemented");
+            // Arrange
+            ResourceNotFoundException exception =
+                    new ResourceNotFoundException("Resource not found");
+            MockHttpServletRequest request = new MockHttpServletRequest();
+            request.setRequestURI(PATH_VARIABLE_ID);
+
+            ResourceExceptionHandler handler = new ResourceExceptionHandler();
+
+            // Act
+            ResponseEntity<StandardError> response = handler.entityNotFound(exception, request);
+
+            // Assert
+            assertEquals(
+                    "Resource not found",
+                    Objects.requireNonNull(response.getBody()).getError(),
+                    "Error message should match exception message");
         }
     }
 
