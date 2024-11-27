@@ -65,7 +65,12 @@ public class ProductControllerTest {
 
         @Test
         void shouldInvokeListProductsByCategoryIdUseCase() throws Exception {
-            fail("Test not implemented");
+            // Act & Assert
+            mockMvc.perform(get("/products?categoryId=1")).andReturn();
+
+            // Verify
+            verify(listProductsByCategoryUseCase, times(1))
+                    .execute(any(ProductGateway.class), eq(1L));
         }
 
         @Test
