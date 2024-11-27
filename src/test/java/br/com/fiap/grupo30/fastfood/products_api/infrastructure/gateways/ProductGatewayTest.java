@@ -53,7 +53,14 @@ class ProductGatewayTest {
 
         @Test
         void shouldReturnEmptyListWhenNoProductsForCategoryId() {
-            fail("Test not implemented");
+            // Arrange
+            when(jpaProductRepository.findProductsByCategoryId(1L)).thenReturn(List.of());
+
+            // Act
+            List<Product> result = productGateway.findProductsByCategoryId(1L);
+
+            // Assert
+            assertThat(result).isEmpty();
         }
     }
 
