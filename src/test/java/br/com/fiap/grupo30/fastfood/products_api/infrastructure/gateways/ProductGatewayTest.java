@@ -13,6 +13,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 class ProductGatewayTest {
 
@@ -97,7 +98,15 @@ class ProductGatewayTest {
     class SaveProduct {
         @Test
         void shouldSaveProduct() {
-            fail("Test not implemented");
+            // Arrange
+            ProductEntity entity = ProductHelper.createDefaultProduct().toPersistence();
+            when(jpaProductRepository.save(Mockito.any())).thenReturn(entity);
+
+            // Act
+            Product result = productGateway.save(ProductHelper.createDefaultProduct());
+
+            // Assert
+            assertThat(result.getName()).isEqualTo("Burger");
         }
     }
 
