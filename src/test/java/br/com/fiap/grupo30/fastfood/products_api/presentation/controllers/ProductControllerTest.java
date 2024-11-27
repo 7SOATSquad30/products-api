@@ -130,7 +130,23 @@ public class ProductControllerTest {
 
         @Test
         void shouldInvokeCreateProductUseCase() throws Exception {
-            fail("Test not implemented");
+            // Arrange
+            ProductDTO productDTO = ProductHelper.createDefaultProductDTOWithId(1L);
+
+            // Act & Assert
+            String jsonContent = new ObjectMapper().writeValueAsString(productDTO);
+            mockMvc.perform(
+                            post("/products")
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .content(jsonContent))
+                    .andReturn();
+
+            // Verify
+            verify(createProductUseCase, times(1))
+                    .execute(
+                            any(ProductGateway.class),
+                            any(CategoryGateway.class),
+                            any(ProductDTO.class));
         }
     }
 
