@@ -2,15 +2,20 @@ package br.com.fiap.grupo30.fastfood.products_api.presentation.controllers.excep
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.*;
 
 import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.exceptions.DatabaseException;
 import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.exceptions.ResourceNotFoundException;
+import br.com.fiap.grupo30.fastfood.products_api.utils.FieldErrorHelper;
+import java.util.List;
 import java.util.Objects;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 class ResourceExceptionHandlerTest {
 
@@ -105,7 +110,26 @@ class ResourceExceptionHandlerTest {
     class MethodArgumentNotValidExceptionHandler {
         @Test
         void shouldHandleValidationExceptionAndReturn422() {
-            fail("Test not implemented");
+            // Arrange
+            MethodArgumentNotValidException exception = mock(MethodArgumentNotValidException.class);
+            MockHttpServletRequest request = new MockHttpServletRequest();
+            request.setRequestURI(PATH_VARIABLE);
+
+            BindingResult bindingResult = mock(BindingResult.class);
+            when(bindingResult.getFieldErrors())
+                    .thenReturn(List.of(FieldErrorHelper.createDefaultFieldError()));
+            when(exception.getBindingResult()).thenReturn(bindingResult);
+
+            ResourceExceptionHandler handler = new ResourceExceptionHandler();
+
+            // Act
+            ResponseEntity<ValidationError> response = handler.validation(exception, request);
+
+            // Assert
+            assertEquals(
+                    HttpStatus.UNPROCESSABLE_ENTITY,
+                    response.getStatusCode(),
+                    "Expected HTTP status UNPROCESSABLE_ENTITY (422)");
         }
 
         @Test
