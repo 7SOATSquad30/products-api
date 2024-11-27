@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import br.com.fiap.grupo30.fastfood.products_api.domain.entities.Product;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.entities.ProductEntity;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.repositories.JpaProductRepository;
+import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.exceptions.ResourceNotFoundException;
 import br.com.fiap.grupo30.fastfood.products_api.utils.ProductHelper;
 import java.util.List;
 import java.util.Optional;
@@ -82,7 +83,13 @@ class ProductGatewayTest {
 
         @Test
         void shouldThrowResourceNotFoundExceptionWhenIdDoesNotExist() {
-            fail("Test not implemented");
+            // Arrange
+            when(jpaProductRepository.findById(1L)).thenReturn(Optional.empty());
+
+            // Act & Assert
+            assertThatThrownBy(() -> productGateway.findById(1L))
+                    .isInstanceOf(ResourceNotFoundException.class)
+                    .hasMessageContaining("Product not found");
         }
     }
 
