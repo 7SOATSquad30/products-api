@@ -1,7 +1,6 @@
 package br.com.fiap.grupo30.fastfood.products_api.presentation.controllers.exceptions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.exceptions.DatabaseException;
@@ -207,7 +206,26 @@ class ResourceExceptionHandlerTest {
 
         @Test
         void shouldReturnValidationErrorDetails_errorMessage() {
-            fail("Test not implemented");
+            // Arrange
+            MethodArgumentNotValidException exception = mock(MethodArgumentNotValidException.class);
+            MockHttpServletRequest request = new MockHttpServletRequest();
+            request.setRequestURI(PATH_VARIABLE);
+
+            FieldError fieldError = FieldErrorHelper.createDefaultFieldError();
+            BindingResult bindingResult = mock(BindingResult.class);
+            when(bindingResult.getFieldErrors()).thenReturn(List.of(fieldError));
+            when(exception.getBindingResult()).thenReturn(bindingResult);
+
+            ResourceExceptionHandler handler = new ResourceExceptionHandler();
+
+            // Act
+            ResponseEntity<ValidationError> response = handler.validation(exception, request);
+
+            // Assert
+            assertEquals(
+                    "Name is required",
+                    Objects.requireNonNull(response.getBody()).getErrors().get(0).getMessage(),
+                    "Error message in ValidationError should match expected value");
         }
     }
 }
