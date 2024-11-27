@@ -83,7 +83,21 @@ class ResourceExceptionHandlerTest {
 
         @Test
         void shouldReturnCorrectErrorMessageForDatabaseException() {
-            fail("Test not implemented");
+            // Arrange
+            DatabaseException exception = new DatabaseException("Database exception");
+            MockHttpServletRequest request = new MockHttpServletRequest();
+            request.setRequestURI(PATH_VARIABLE);
+
+            ResourceExceptionHandler handler = new ResourceExceptionHandler();
+
+            // Act
+            ResponseEntity<StandardError> response = handler.database(exception, request);
+
+            // Assert
+            assertEquals(
+                    "Database exception",
+                    Objects.requireNonNull(response.getBody()).getError(),
+                    "Error message should match exception message");
         }
     }
 
