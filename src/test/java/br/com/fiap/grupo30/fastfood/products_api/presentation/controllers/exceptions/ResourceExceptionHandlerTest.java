@@ -3,6 +3,7 @@ package br.com.fiap.grupo30.fastfood.products_api.presentation.controllers.excep
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.exceptions.DatabaseException;
 import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.exceptions.ResourceNotFoundException;
 import java.util.Objects;
 import org.junit.jupiter.api.Nested;
@@ -13,6 +14,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 
 class ResourceExceptionHandlerTest {
 
+    private static final String PATH_VARIABLE = "/products";
     private static final String PATH_VARIABLE_ID = "/products/{id}";
 
     @Nested
@@ -62,7 +64,21 @@ class ResourceExceptionHandlerTest {
     class DatabaseExceptionHandler {
         @Test
         void shouldHandleDatabaseExceptionAndReturn400() {
-            fail("Test not implemented");
+            // Arrange
+            DatabaseException exception = new DatabaseException("Database exception");
+            MockHttpServletRequest request = new MockHttpServletRequest();
+            request.setRequestURI(PATH_VARIABLE);
+
+            ResourceExceptionHandler handler = new ResourceExceptionHandler();
+
+            // Act
+            ResponseEntity<StandardError> response = handler.database(exception, request);
+
+            // Assert
+            assertEquals(
+                    HttpStatus.BAD_REQUEST,
+                    response.getStatusCode(),
+                    "Expected HTTP status BAD_REQUEST (400)");
         }
 
         @Test
