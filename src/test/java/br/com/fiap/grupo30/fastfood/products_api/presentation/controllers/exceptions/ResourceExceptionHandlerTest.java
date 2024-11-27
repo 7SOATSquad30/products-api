@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 class ResourceExceptionHandlerTest {
@@ -134,7 +135,26 @@ class ResourceExceptionHandlerTest {
 
         @Test
         void shouldReturnValidationErrorDetails_exceptionMessage() {
-            fail("Test not implemented");
+            // Arrange
+            MethodArgumentNotValidException exception = mock(MethodArgumentNotValidException.class);
+            MockHttpServletRequest request = new MockHttpServletRequest();
+            request.setRequestURI(PATH_VARIABLE);
+
+            FieldError fieldError = FieldErrorHelper.createDefaultFieldError();
+            BindingResult bindingResult = mock(BindingResult.class);
+            when(bindingResult.getFieldErrors()).thenReturn(List.of(fieldError));
+            when(exception.getBindingResult()).thenReturn(bindingResult);
+
+            ResourceExceptionHandler handler = new ResourceExceptionHandler();
+
+            // Act
+            ResponseEntity<ValidationError> response = handler.validation(exception, request);
+
+            // Assert
+            assertEquals(
+                    "Validation exception",
+                    Objects.requireNonNull(response.getBody()).getError(),
+                    "Error message should match exception message");
         }
 
         @Test
