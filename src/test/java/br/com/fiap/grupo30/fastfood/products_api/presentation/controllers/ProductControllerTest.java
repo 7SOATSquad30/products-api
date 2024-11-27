@@ -39,6 +39,8 @@ public class ProductControllerTest {
 
     @InjectMocks private ProductController productController;
 
+    private static final String PATH_VARIABLE_ID = "/products/{id}";
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -84,7 +86,7 @@ public class ProductControllerTest {
 
             // Act & Assert
             mockMvc.perform(
-                            get("/products/{id}", productId)
+                            get(PATH_VARIABLE_ID, productId)
                                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.productId").value(productId))
@@ -174,7 +176,7 @@ public class ProductControllerTest {
             // Act & Assert
             String jsonContent = new ObjectMapper().writeValueAsString(updatedProductDTO);
             mockMvc.perform(
-                            put("/products/{id}", productId)
+                            put(PATH_VARIABLE_ID, productId)
                                     .contentType(MediaType.APPLICATION_JSON)
                                     .content(jsonContent))
                     .andExpect(status().isOk())
@@ -199,7 +201,7 @@ public class ProductControllerTest {
         void shouldDeleteProductAndReturn204() throws Exception {
             // Act & Assert
             Long productId = 1L;
-            mockMvc.perform(delete("/products/{id}", productId)).andExpect(status().isNoContent());
+            mockMvc.perform(delete(PATH_VARIABLE_ID, productId)).andExpect(status().isNoContent());
 
             // Verify
             verify(deleteProductUseCase, times(1)).execute(any(ProductGateway.class), eq(1L));
@@ -209,7 +211,7 @@ public class ProductControllerTest {
         void shouldInvokeDeleteProductUseCase() throws Exception {
             // Act & Assert
             Long productId = 1L;
-            mockMvc.perform(delete("/products/{id}", productId)).andReturn();
+            mockMvc.perform(delete(PATH_VARIABLE_ID, productId)).andReturn();
 
             // Verify
             verify(deleteProductUseCase, times(1)).execute(any(ProductGateway.class), eq(1L));
