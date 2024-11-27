@@ -17,4 +17,16 @@ class ProductEntityTest {
         // Assert
         assertNotNull(product.getCreatedAt(), "CreatedAt should be set during prePersist");
     }
+
+    @Test
+    void preUpdateShouldSetUpdatedAt() {
+        // Arrange
+        ProductEntity product = new ProductEntity();
+
+        // Act
+        product.preUpdate();
+
+        // Assert
+        assertNotNull(product.getUpdatedAt(), "UpdatedAt should be set during preUpdate");
+    }
 }
