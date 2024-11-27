@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 class ProductGatewayTest {
 
@@ -126,7 +127,15 @@ class ProductGatewayTest {
 
         @Test
         void shouldThrowResourceNotFoundExceptionWhenDeletingNonExistingId() {
-            fail("Test not implemented");
+            // Arrange
+            doThrow(new EmptyResultDataAccessException(1))
+                    .when(jpaProductRepository)
+                    .deleteById(1L);
+
+            // Act & Assert
+            assertThatThrownBy(() -> productGateway.delete(1L))
+                    .isInstanceOf(ResourceNotFoundException.class)
+                    .hasMessageContaining("Id not found");
         }
 
         @Test
