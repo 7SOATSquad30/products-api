@@ -199,7 +199,7 @@ public class ProductControllerTest {
         void shouldDeleteProductAndReturn204() throws Exception {
             // Act & Assert
             Long productId = 1L;
-            mockMvc.perform(delete("/products/{1}", productId)).andExpect(status().isNoContent());
+            mockMvc.perform(delete("/products/{id}", productId)).andExpect(status().isNoContent());
 
             // Verify
             verify(deleteProductUseCase, times(1)).execute(any(ProductGateway.class), eq(1L));
@@ -207,7 +207,12 @@ public class ProductControllerTest {
 
         @Test
         void shouldInvokeDeleteProductUseCase() throws Exception {
-            fail("Test not implemented");
+            // Act & Assert
+            Long productId = 1L;
+            mockMvc.perform(delete("/products/{id}", productId)).andReturn();
+
+            // Verify
+            verify(deleteProductUseCase, times(1)).execute(any(ProductGateway.class), eq(1L));
         }
     }
 }
