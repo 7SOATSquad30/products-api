@@ -1,17 +1,16 @@
 package br.com.fiap.grupo30.fastfood.products_api;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ProductsApiApplicationTests {
+class ProductsApiApplicationTest {
 
     @Test
-    void contextLoads() {
-        int x = 1;
-        int y = 1;
-        assertEquals(x, y, "assertion failed");
+    void applicationContextShouldLoad() {
+        // Act & Assert
+        assertNotNull(ProductsApiApplication.class, "Application class should not be null");
     }
 }
