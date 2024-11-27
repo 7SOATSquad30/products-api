@@ -40,7 +40,15 @@ class ProductGatewayTest {
 
         @Test
         void shouldReturnProductsByCategoryIdWithCorrectName() {
-            fail("Test not implemented");
+            // Arrange
+            ProductEntity entity = ProductHelper.createDefaultProduct().toPersistence();
+            when(jpaProductRepository.findProductsByCategoryId(1L)).thenReturn(List.of(entity));
+
+            // Act
+            List<Product> result = productGateway.findProductsByCategoryId(1L);
+
+            // Assert
+            assertThat(result.get(0).getName()).isEqualTo("Burger");
         }
 
         @Test
