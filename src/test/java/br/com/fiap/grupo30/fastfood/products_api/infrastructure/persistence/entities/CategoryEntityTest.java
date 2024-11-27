@@ -1,10 +1,14 @@
 package br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.entities;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
 class CategoryEntityTest {
+
+    private static final Long CATEGORY_ID = 1L;
+    private static final String CATEGORY_NAME = "Snacks";
 
     @Test
     void prePersistShouldSetCreatedAt() {
@@ -40,5 +44,23 @@ class CategoryEntityTest {
 
         // Assert
         assertNotNull(category.getDeletedAt(), "DeletedAt should be set during preRemove");
+    }
+
+    @Test
+    void constructorShouldCreateCategoryEntityWithCorrectId() {
+        // Act
+        CategoryEntity category = new CategoryEntity(CATEGORY_ID, CATEGORY_NAME);
+
+        // Assert
+        assertThat(category.getId()).isEqualTo(CATEGORY_ID);
+    }
+
+    @Test
+    void constructorShouldCreateCategoryEntityWithCorrectName() {
+        // Act
+        CategoryEntity category = new CategoryEntity(CATEGORY_ID, CATEGORY_NAME);
+
+        // Assert
+        assertThat(category.getName()).isEqualTo(CATEGORY_NAME);
     }
 }
