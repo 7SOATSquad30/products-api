@@ -114,7 +114,14 @@ class ProductGatewayTest {
     class DeleteProduct {
         @Test
         void shouldDeleteProductById() {
-            fail("Test not implemented");
+            // Arrange
+            doNothing().when(jpaProductRepository).deleteById(1L);
+
+            // Act
+            productGateway.delete(1L);
+
+            // Assert
+            verify(jpaProductRepository).deleteById(1L);
         }
 
         @Test
