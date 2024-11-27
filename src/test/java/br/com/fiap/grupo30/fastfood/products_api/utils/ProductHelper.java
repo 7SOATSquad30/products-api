@@ -8,7 +8,7 @@ public class ProductHelper {
 
     private static final String DEFAULT_NAME = "Burger";
     private static final String DEFAULT_DESCRIPTION = "Delicious burger";
-    private static final double DEFAULT_PRICE = 12.99;
+    private static final Double DEFAULT_PRICE = 12.99;
     private static final String DEFAULT_IMAGE_URL = "http://example.com/burger.png";
     private static final Long DEFAULT_CATEGORY_ID = 1L;
     private static final String DEFAULT_CATEGORY_NAME = "Snacks";
@@ -107,5 +107,18 @@ public class ProductHelper {
                         DEFAULT_IMAGE_URL,
                         createCategory(null, "Unknown"))
                 .toDTO();
+    }
+
+    /**
+     * Creates a UpdatedProductDTO with custom values.
+     */
+    public static ProductDTO createUpdatedProductDTO(
+            Long id,
+            String name,
+            String description,
+            Double price,
+            String imgUrl,
+            String category) {
+        return new ProductDTO(id, name, description, price, imgUrl, category);
     }
 }

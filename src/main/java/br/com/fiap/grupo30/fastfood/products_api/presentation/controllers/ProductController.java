@@ -3,8 +3,6 @@ package br.com.fiap.grupo30.fastfood.products_api.presentation.controllers;
 import br.com.fiap.grupo30.fastfood.products_api.domain.usecases.product.*;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.gateways.CategoryGateway;
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.gateways.ProductGateway;
-import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.repositories.JpaCategoryRepository;
-import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.repositories.JpaProductRepository;
 import br.com.fiap.grupo30.fastfood.products_api.presentation.presenters.dto.ProductDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,8 +26,8 @@ public class ProductController {
     private final GetProductUseCase getProductUseCase;
     private final ListProductsByCategoryUseCase listProductsByCategoryUseCase;
     private final UpdateProductUseCase updateProductUseCase;
-    private final JpaProductRepository jpaProductRepository;
-    private final JpaCategoryRepository jpaCategoryRepository;
+    private final ProductGateway productGateway;
+    private final CategoryGateway categoryGateway;
 
     @Autowired
     public ProductController(
@@ -38,16 +36,16 @@ public class ProductController {
             GetProductUseCase getProductUseCase,
             ListProductsByCategoryUseCase listProductsByCategoryUseCase,
             UpdateProductUseCase updateProductUseCase,
-            JpaProductRepository jpaProductRepository,
-            JpaCategoryRepository jpaCategoryRepository) {
+            ProductGateway productGateway,
+            CategoryGateway categoryGateway) {
 
         this.createProductUseCase = createProductUseCase;
         this.deleteProductUseCase = deleteProductUseCase;
         this.getProductUseCase = getProductUseCase;
         this.listProductsByCategoryUseCase = listProductsByCategoryUseCase;
         this.updateProductUseCase = updateProductUseCase;
-        this.jpaProductRepository = jpaProductRepository;
-        this.jpaCategoryRepository = jpaCategoryRepository;
+        this.productGateway = productGateway;
+        this.categoryGateway = categoryGateway;
     }
 
     @GetMapping
@@ -58,7 +56,6 @@ public class ProductController {
                             + "via RequestParam. i.e., ?categoryId=1")
     public ResponseEntity<List<ProductDTO>> findProductsByCategoryId(
             @RequestParam(value = "categoryId", defaultValue = "0") Long categoryId) {
-        ProductGateway productGateway = new ProductGateway(jpaProductRepository);
         List<ProductDTO> products =
                 this.listProductsByCategoryUseCase.execute(productGateway, categoryId);
         return ResponseEntity.ok().body(products);
@@ -69,7 +66,6 @@ public class ProductController {
             summary = "Get a product by ID",
             description = "Retrieve a specific product based on its ID")
     public ResponseEntity<ProductDTO> findProductById(@PathVariable Long id) {
-        ProductGateway productGateway = new ProductGateway(jpaProductRepository);
         ProductDTO dto = this.getProductUseCase.execute(productGateway, id);
         return ResponseEntity.ok().body(dto);
     }
@@ -79,8 +75,6 @@ public class ProductController {
             summary = "Create a new product",
             description = "Create a new product and return the created product's data")
     public ResponseEntity<ProductDTO> createProduct(@RequestBody @Valid ProductDTO dto) {
-        ProductGateway productGateway = new ProductGateway(jpaProductRepository);
-        CategoryGateway categoryGateway = new CategoryGateway(jpaCategoryRepository);
         ProductDTO dtoCreated =
                 this.createProductUseCase.execute(productGateway, categoryGateway, dto);
         URI uri =
@@ -97,8 +91,6 @@ public class ProductController {
             description = "Update the data of an existing product based on its ID")
     public ResponseEntity<ProductDTO> updateProduct(
             @PathVariable Long id, @RequestBody @Valid ProductDTO dto) {
-        ProductGateway productGateway = new ProductGateway(jpaProductRepository);
-        CategoryGateway categoryGateway = new CategoryGateway(jpaCategoryRepository);
         ProductDTO dtoUpdated =
                 this.updateProductUseCase.execute(productGateway, categoryGateway, dto);
         return ResponseEntity.ok().body(dtoUpdated);
@@ -109,7 +101,6 @@ public class ProductController {
             summary = "Delete a product",
             description = "Delete an existing product based on its ID")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        ProductGateway productGateway = new ProductGateway(jpaProductRepository);
         this.deleteProductUseCase.execute(productGateway, id);
         return ResponseEntity.noContent().build();
     }
