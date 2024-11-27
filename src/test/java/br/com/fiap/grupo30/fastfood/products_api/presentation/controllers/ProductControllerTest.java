@@ -154,7 +154,42 @@ public class ProductControllerTest {
     class PutProduct {
         @Test
         void shouldUpdateProductAndReturn200() throws Exception {
-            fail("Test not implemented");
+            // Arrange
+            Long productId = 1L;
+            ProductDTO updatedProductDTO =
+                    ProductHelper.createUpdatedProductDTO(
+                            productId,
+                            "Updated Burger",
+                            "Delicious updated burger",
+                            15.99,
+                            "http://example.com/updated-burger.png",
+                            "Snacks");
+
+            when(updateProductUseCase.execute(
+                            any(ProductGateway.class),
+                            any(CategoryGateway.class),
+                            any(ProductDTO.class)))
+                    .thenReturn(updatedProductDTO);
+
+            // Act & Assert
+            String jsonContent = new ObjectMapper().writeValueAsString(updatedProductDTO);
+            mockMvc.perform(
+                            put("/products/{id}", productId)
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .content(jsonContent))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.productId").value(productId))
+                    .andExpect(jsonPath("$.name").value("Updated Burger"))
+                    .andExpect(jsonPath("$.price").value(15.99))
+                    .andExpect(jsonPath("$.description").value("Delicious updated burger"))
+                    .andExpect(jsonPath("$.imgUrl").value("http://example.com/updated-burger.png"));
+
+            // Verify
+            verify(updateProductUseCase, times(1))
+                    .execute(
+                            any(ProductGateway.class),
+                            any(CategoryGateway.class),
+                            any(ProductDTO.class));
         }
     }
 
