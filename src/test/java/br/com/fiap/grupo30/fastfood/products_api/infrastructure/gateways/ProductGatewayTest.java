@@ -8,6 +8,7 @@ import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.enti
 import br.com.fiap.grupo30.fastfood.products_api.infrastructure.persistence.repositories.JpaProductRepository;
 import br.com.fiap.grupo30.fastfood.products_api.utils.ProductHelper;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -68,7 +69,15 @@ class ProductGatewayTest {
     class FindProductById {
         @Test
         void shouldReturnProductById() {
-            fail("Test not implemented");
+            // Arrange
+            ProductEntity entity = ProductHelper.createDefaultProduct().toPersistence();
+            when(jpaProductRepository.findById(1L)).thenReturn(Optional.of(entity));
+
+            // Act
+            Product result = productGateway.findById(1L);
+
+            // Assert
+            assertThat(result.getName()).isEqualTo("Burger");
         }
 
         @Test
